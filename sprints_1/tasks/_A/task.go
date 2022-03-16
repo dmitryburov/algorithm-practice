@@ -42,7 +42,7 @@ func main() {
 
 	result := a*(x*x) + b*x + c
 
-	writer.WriteString(strconv.Itoa(result))
-	writer.WriteString("\n")
-	writer.Flush()
+	_, _ = writer.WriteString(strconv.Itoa(result))
+	_, _ = writer.WriteString("\n")
+	_ = writer.Flush()
 }
