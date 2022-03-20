@@ -12,9 +12,8 @@ func main() {
 	fmt.Println(numToBinary(n))
 }
 
-func numToBinary(num int) string {
+func numToBinary(n int) string {
 	var binaryStr string
-	var n = num
 
 	for n > 0 {
 		binaryStr = fmt.Sprintf("%d%s", n%2, binaryStr)
