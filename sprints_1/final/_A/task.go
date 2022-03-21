@@ -8,75 +8,78 @@ import (
 	"strings"
 )
 
+// ID посылки: 66269683
+// Комментарий:
+// сделал алогиритм линейным, думал-думал как же го реализовать по сложности O(log(n), тк при нагрузке время и память расходовалась прилично.
 func main() {
 
 	input, err := getInputFromFile()
 	if err != nil {
 		showError(err)
 	}
+	// fix close file
 	defer input.Close()
 
-	n, numbers, err := parseDataInput(bufio.NewReader(input))
-	if err != nil {
-		showError(err)
-	}
-
-	result := resultTask(n, numbers)
-	if err = outputFile(result); err != nil {
-		showError(err)
-	}
-}
-
-// resultTask поиск расстояния до соседей
-func resultTask(n int, numbers []string) string {
-
-	var needCalc bool
-	var zeroCount = 1
-
-	for i := 0; i < n; i++ {
-		if numbers[i] == "0" {
-			if needCalc {
-				needCalc = false
-				if zeroCount%2 == 1 {
-					zeroCount = (zeroCount + 1) / 2
-				} else {
-					zeroCount = zeroCount / 2
-				}
-				i -= zeroCount
-				continue
-			} else {
-				for i2 := i; i2 > 0; i2-- {
-					numbers[i2] =
-
-				}
-			}
-
-			needCalc = true
-			zeroCount = 1
-		} else {
-			numbers[i] = fmt.Sprintf("%d", zeroCount)
-			zeroCount++
-		}
-	}
-
-	return strings.Join(numbers, " ")
-}
-
-// parseDataInput парсинг параметров согласно задаче
-func parseDataInput(reader *bufio.Reader) (n int, numbers []string, err error) {
-
-	defer reader.Reset(reader)
+	reader := bufio.NewReader(input)
 
 	strNum, _, _ := reader.ReadLine()
-	n, err = strconv.Atoi(string(strNum))
+	n, err := strconv.Atoi(string(strNum))
 	if err != nil {
 		return
 	}
 
+	numbers := make([]string, n)
 	strNums, _ := reader.ReadString('\n')
 	numbers = strings.Split(strings.TrimSpace(strNums), " ")
 
-	return
+	// fix close bufio
+	defer reader.Reset(reader)
+
+	var (
+		findLastZero bool
+		lastZero     = 1
+	)
+
+	// обход слева
+	for i := 0; i < n; i++ {
+		if numbers[i] == "0" {
+			lastZero = 1
+			findLastZero = true
+			continue
+		}
+
+		if findLastZero {
+			numbers[i] = fmt.Sprintf("%d", lastZero)
+			lastZero++
+		} else {
+			numbers[i] = fmt.Sprintf("%d", n)
+		}
+	}
+
+	findLastZero = false
+	lastZero = 1
+
+	// обход справа
+	for i := n - 1; i >= 0; i-- {
+		if numbers[i] == "0" {
+			lastZero = 1
+			findLastZero = true
+			continue
+		}
+
+		if findLastZero {
+			currNum, _ := strconv.Atoi(numbers[i])
+			if currNum > lastZero {
+				numbers[i] = fmt.Sprintf("%d", lastZero)
+			}
+
+			lastZero++
+		}
+	}
+
+	if err = outputFile(strings.Join(numbers, " ")); err != nil {
+		showError(err)
+	}
 }
 
 // getInputFromFile получение input из файла
@@ -99,7 +102,6 @@ func outputFile(data string) error {
 	defer f.Close()
 
 	_, err = f.WriteString(data + "\n")
-	_, err = f.WriteString("0 0 1 0 0 0 0 1 0 0 1 2 1 0 1 0 1 0 0 0 # etalon" + "\n")
 	if err != nil {
 		return err
 	}
