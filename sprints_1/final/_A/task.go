@@ -8,7 +8,9 @@ import (
 	"strings"
 )
 
-// ID посылки: 66269683
+// ID посылки:
+//	  66269683
+//
 // Комментарий:
 //    Cделал алогиритм линейным, думал-думал как же го реализовать по сложности O(log(n),
 //    тк при нагрузке время и память расходовалась прилично.
@@ -27,7 +29,7 @@ func main() {
 	strNum, _, _ := reader.ReadLine()
 	n, err := strconv.Atoi(string(strNum))
 	if err != nil {
-		return
+		showError(err)
 	}
 
 	numbers := make([]string, n)

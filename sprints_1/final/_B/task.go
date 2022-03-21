@@ -8,7 +8,10 @@ import (
 	"strings"
 )
 
+// ID посылки: 66293083
 func main() {
+
+	const matrixCnt = 4
 
 	inp, err := getInputFromFile()
 	if err != nil {
@@ -28,28 +31,35 @@ func main() {
 	k *= 2
 
 	var numbers [][]string
-	for i := 0; i < 4; i++ {
+	for i := 0; i < matrixCnt; i++ {
 		strNums, _ := reader.ReadString('\n')
 		numbers = append(numbers, strings.Split(strings.TrimSpace(strNums), ""))
 	}
 	defer reader.Reset(reader)
 
 	var result int
-	var matrix = make(map[string]int, 10)
+	var matrix = make(map[string]int, 9)
 
 	// собираем совпадения в матрице
-	for i := 0; i < 4; i++ {
-		if numbers[i][i] != "." {
-
-		}
-		if _, ok := matrix[numbers]; !ok {
-
+	for i := 0; i < matrixCnt; i++ {
+		for i2 := 0; i2 < matrixCnt; i2++ {
+			if numbers[i][i2] != "." {
+				if _, ok := matrix[numbers[i][i2]]; !ok {
+					matrix[numbers[i][i2]] = 1
+				} else {
+					matrix[numbers[i][i2]]++
+				}
+			}
 		}
 	}
 
 	// проверям совпадения по времени t
+	for i := range matrix {
+		if k >= matrix[i] {
+			result++
+		}
+	}
 
-	fmt.Println(matrix)
 	fmt.Println(result)
 }
 
