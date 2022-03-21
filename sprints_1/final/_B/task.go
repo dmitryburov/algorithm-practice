@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 )
 
 func main() {
@@ -12,25 +14,43 @@ func main() {
 	if err != nil {
 		showError(err)
 	}
+	defer inp.Close()
 
-	n, fields, err := parseInputData(bufio.NewReader(inp))
+	reader := bufio.NewReader(inp)
+
+	strNum, _, _ := reader.ReadLine()
+	k, err := strconv.Atoi(string(strNum))
 	if err != nil {
 		showError(err)
 	}
 
-	result := checkResult(n, fields)
+	// к могут нажать каждый из игроков
+	k *= 2
+
+	var numbers [][]string
+	for i := 0; i < 4; i++ {
+		strNums, _ := reader.ReadString('\n')
+		numbers = append(numbers, strings.Split(strings.TrimSpace(strNums), ""))
+	}
+	defer reader.Reset(reader)
+
+	var result int
+	var matrix = make(map[string]int, 10)
+
+	// собираем совпадения в матрице
+	for i := 0; i < 4; i++ {
+		if numbers[i][i] != "." {
+
+		}
+		if _, ok := matrix[numbers]; !ok {
+
+		}
+	}
+
+	// проверям совпадения по времени t
+
+	fmt.Println(matrix)
 	fmt.Println(result)
-}
-
-func checkResult(n int, fields []int) int {
-
-	return 0
-}
-
-// parseInputData парсинг данных из input
-func parseInputData(reader *bufio.Reader) (n int, fields []int, err error) {
-
-	return
 }
 
 // getInputFromFile получение input из файла
