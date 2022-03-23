@@ -19,7 +19,7 @@ func main() {
 
 	solution(n, numbers)
 
-	if err = outputFile(strings.Join(numbers, "")); err != nil {
+	if err = outputFile(strings.Join(numbers, " ")); err != nil {
 		showError(err)
 	}
 }
@@ -28,49 +28,47 @@ func main() {
 func solution(n int, numbers []string) []string {
 	var (
 		zeroIndex = make(map[int]int)
-		findZero  bool
-		lastZero  = 1
+		counter   = n * 2
 	)
 
 	// обход слева
 	for i := 0; i < n; i++ {
 		if numbers[i] == "0" {
-			zeroIndex[i] = 0
-			findZero = true
-			lastZero = 1
+			if i+1 < n && numbers[i+1] == "0" {
+				continue
+			}
+			zeroIndex[i] = counter
+			counter = 1
 			continue
 		}
 
-		if findZero {
-			numbers[i] = fmt.Sprintf("%d", lastZero)
-			lastZero++
+		if counter < n {
+			numbers[i] = fmt.Sprint(counter)
 		} else {
-			numbers[i] = fmt.Sprintf("%d", n)
+			numbers[i] = fmt.Sprint(n)
 		}
+
+		counter++
 	}
 
 	// обход справа
-	lastZero = 1
+	var contain int
+	counter = 999999
 	for i := n - 1; i >= 0; i-- {
 		if numbers[i] == "0" {
-			lastZero = 1
-			delete(zeroIndex, len(zeroIndex)-1) // remove last
+			if i+1 < n && numbers[i+1] == "0" {
+				continue
+			}
+			counter = 1
+			contain = zeroIndex[i]
 			continue
 		}
 
-		if len(zeroIndex) > 0 {
-			if i - zeroIndex[] > lastZero {
-				numbers[i] = fmt.Sprintf("%d", lastZero)
+		if contain > 0 {
+			if counter < (contain - counter) {
+				numbers[i] = fmt.Sprint(counter)
 			}
-		}
-
-		lastZero++
-
-		if findLastZero {
-			if numbers[i] > lastZero {
-				numbers[i] = fmt.Sprintf("%d", lastZero)
-			}
-			lastZero++
+			counter++
 		}
 	}
 
