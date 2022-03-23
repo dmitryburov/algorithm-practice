@@ -17,7 +17,7 @@ func TestTask(t *testing.T) {
 	var taskItems = generateTasks()
 
 	for i := 0; i < len(taskItems); i++ {
-		t.Run(fmt.Sprintf("Example %d", 0+1), func(t *testing.T) {
+		t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			if res := solution(matrixCnt, taskItems[i].K, taskItems[i].Matrix); res != taskItems[i].Result {
 				t.Errorf("Неверный ответ решения! Ответ: %d. Правильный: %d", res, taskItems[i].Result)
 			}
