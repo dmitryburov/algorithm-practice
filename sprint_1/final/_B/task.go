@@ -8,34 +8,25 @@ import (
 	"strings"
 )
 
-// ID посылки: 66293083
+// ID посылки: 66335150
+// Предыдущий ID посылки: 66293083
 func main() {
 
 	const matrixCnt = 4
 
-	inp, err := getInputFromFile()
-	if err != nil {
-		showError(err)
-	}
-	defer inp.Close()
-
-	reader := bufio.NewReader(inp)
-
-	strNum, _, _ := reader.ReadLine()
-	k, err := strconv.Atoi(string(strNum))
+	// получаем входные данные
+	k, numbers, err := getInputData(matrixCnt)
 	if err != nil {
 		showError(err)
 	}
 
-	// к могут нажать каждый из игроков
-	k *= 2
+	// алгоритм
+	result := solution(matrixCnt, k, numbers)
+	fmt.Println(result)
+}
 
-	var numbers [][]string
-	for i := 0; i < matrixCnt; i++ {
-		strNums, _ := reader.ReadString('\n')
-		numbers = append(numbers, strings.Split(strings.TrimSpace(strNums), ""))
-	}
-	defer reader.Reset(reader)
+// solution выполнение алгоритма
+func solution(matrixCnt int, k int, numbers [][]string) int {
 
 	var result int
 	var matrix = make(map[string]int, 9)
@@ -53,6 +44,9 @@ func main() {
 		}
 	}
 
+	// к могут нажать каждый из игроков
+	k *= 2
+
 	// проверям совпадения по времени t
 	for i := range matrix {
 		if k >= matrix[i] {
@@ -60,7 +54,33 @@ func main() {
 		}
 	}
 
-	fmt.Println(result)
+	return result
+}
+
+// getInputData парсинг входных данных
+func getInputData(matrixCnt int) (k int, matrix [][]string, err error) {
+
+	inp, err := getInputFromFile()
+	if err != nil {
+		return
+	}
+	defer inp.Close()
+
+	reader := bufio.NewReader(inp)
+
+	strNum, _, _ := reader.ReadLine()
+	k, err = strconv.Atoi(string(strNum))
+	if err != nil {
+		return
+	}
+
+	for i := 0; i < matrixCnt; i++ {
+		strNums, _ := reader.ReadString('\n')
+		matrix = append(matrix, strings.Split(strings.TrimSpace(strNums), ""))
+	}
+	defer reader.Reset(reader)
+
+	return
 }
 
 // getInputFromFile получение input из файла
