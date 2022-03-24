@@ -12,8 +12,8 @@ import (
 )
 
 type queue struct {
-	stack, hStack []int
-	maxNum        *int
+	stack,
+	max []int
 }
 type command struct {
 	Name string
@@ -35,24 +35,24 @@ func main() {
 func solution(n int, commands []command) []string {
 	var result []string
 	var q = &queue{
-		stack:  make([]int, 0, n),
-		hStack: make([]int, 0, n),
+		stack: []int{},
+		max:   []int{},
 	}
 
 	for i := 0; i < n; i++ {
 		switch commands[i].Name {
 		case "get_max":
-			if q.empty() {
+			if q.isEmpty() {
 				result = append(result, "None")
 			} else {
-				result = append(result, q.max())
+				result = append(result, q.getMax())
 			}
 			break
 		case "push":
 			q.push(commands[i].Step)
 			break
 		case "pop":
-			if q.empty() {
+			if q.isEmpty() {
 				result = append(result, "error")
 			} else {
 				q.pop()
@@ -69,25 +69,20 @@ func solution(n int, commands []command) []string {
 // push добавить число в стек
 func (q *queue) push(num int) {
 	q.stack = append(q.stack, num)
-	q.maxNum = nil
 }
 
 // pop удалить число с вершины стека
 func (q *queue) pop() {
 	q.stack = q.stack[:len(q.stack)-1]
-	q.maxNum = nil
 }
 
 // max максимальное число в стеке
-func (q *queue) max() string {
-	if q.maxNum != nil {
-		return fmt.Sprint(*q.maxNum)
-	}
-	return fmt.Sprint(q.hStack[len(q.hStack)-1])
+func (q *queue) getMax() string {
+	return fmt.Sprint(q.max[len(q.max)-1])
 }
 
 // empty проверка на пустоту
-func (q *queue) empty() bool {
+func (q *queue) isEmpty() bool {
 	return len(q.stack) == 0
 }
 
