@@ -1,8 +1,5 @@
 package main
 
-// Зачада G. Стек - MaxEffective
-// ID посылки:
-
 import (
 	"bufio"
 	"fmt"
@@ -15,6 +12,7 @@ type queue struct {
 	stack,
 	max []int
 }
+
 type command struct {
 	Name string
 	Step int
@@ -68,20 +66,32 @@ func solution(n int, commands []command) []string {
 
 // push добавить число в стек
 func (q *queue) push(num int) {
+
+	if len(q.max) > 0 && q.max[len(q.max)-1] <= num {
+		q.max = append(q.max, num)
+	} else if len(q.max) == 0 {
+		q.max = append(q.max, num)
+	}
+
 	q.stack = append(q.stack, num)
 }
 
 // pop удалить число с вершины стека
 func (q *queue) pop() {
-	q.stack = q.stack[:len(q.stack)-1]
+	var x int
+	x, q.stack = q.stack[len(q.stack)-1], q.stack[:len(q.stack)-1]
+
+	if q.max[len(q.max)-1] == x {
+		q.max = q.max[:len(q.max)-1]
+	}
 }
 
-// max максимальное число в стеке
+// getMax максимальное число в стеке
 func (q *queue) getMax() string {
 	return fmt.Sprint(q.max[len(q.max)-1])
 }
 
-// empty проверка на пустоту
+// isEmpty проверка на пустоту
 func (q *queue) isEmpty() bool {
 	return len(q.stack) == 0
 }
