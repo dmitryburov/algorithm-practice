@@ -22,32 +22,84 @@
 
 ### Пример 1
 
-<table class="sample-tests">
-      <thead>
-         <tr>
-            <th>Ввод</th>
-            <th>Вывод</th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr>
-            <td><pre>10
-pop
-pop
-push 4
-push -5
-push 7
-pop
-pop
-get_max
-pop
-get_max
-</pre></td>
-            <td><pre>error
-error
-4
-None
-</pre></td>
-         </tr>
-      </tbody>
-   </table>
+<table>
+  <thead>
+     <tr>
+        <th>Ввод</th>
+        <th>Вывод</th>
+     </tr>
+  </thead>
+  <tbody>
+     <tr>
+        <td>
+            10<br>
+            pop<br>
+            pop<br>
+            push 4<br>
+            push -5<br>
+            push 7<br>
+            pop<br>
+            pop<br>
+            get_max<br>
+            pop<br>
+            get_max<br>
+        </td>
+        <td>
+            error<br>
+            error<br>
+            4<br>
+            None<br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </td>
+     </tr>
+  </tbody>
+</table>
+
+<br> 
+
+### Пример 2
+
+<table>
+  <thead>
+     <tr>
+        <th>Ввод</th>
+        <th>Вывод</th>
+     </tr>
+  </thead>
+  <tbody>
+     <tr>
+        <td>
+            10<br>
+            get_max<br>
+            push -6<br>
+            pop<br>
+            pop<br>
+            get_max<br>
+            push 2<br>
+            get_max<br>
+            pop<br>
+            push -2<br>
+            push -6<br>
+        </td>
+        <td>
+            None<br>
+            error<br>
+            None<br>
+            2<br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        </td>
+     </tr>
+  </tbody>
+</table>
