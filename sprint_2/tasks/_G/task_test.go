@@ -31,68 +31,6 @@ func generateTasks() (tasks []task) {
 	tasks = append(
 		tasks,
 		task{
-			N: 8,
-			Input: []command{
-				{
-					Name: "get_max",
-				},
-				{
-					Name: "push",
-					Step: 7,
-				},
-				{
-					Name: "pop",
-				},
-				{
-					Name: "push",
-					Step: -2,
-				},
-				{
-					Name: "push",
-					Step: -1,
-				},
-				{
-					Name: "pop",
-				},
-				{
-					Name: "get_max",
-				},
-				{
-					Name: "get_max",
-				},
-			},
-			Result: []string{"None", "-2", "-2"},
-		},
-		task{
-			N: 7,
-			Input: []command{
-				{
-					Name: "get_max",
-				},
-				{
-					Name: "pop",
-				},
-				{
-					Name: "pop",
-				},
-				{
-					Name: "pop",
-				},
-				{
-					Name: "push",
-					Step: 10,
-				},
-				{
-					Name: "get_max",
-				},
-				{
-					Name: "push",
-					Step: -9,
-				},
-			},
-			Result: []string{"None", "error", "error", "error", "10"},
-		},
-		task{
 			N: 10,
 			Input: []command{
 				{
@@ -103,14 +41,15 @@ func generateTasks() (tasks []task) {
 				},
 				{
 					Name: "push",
-					Step: 9,
+					Step: 4,
 				},
 				{
 					Name: "push",
-					Step: -7,
+					Step: -5,
 				},
 				{
-					Name: "get_max",
+					Name: "push",
+					Step: 7,
 				},
 				{
 					Name: "pop",
@@ -119,17 +58,60 @@ func generateTasks() (tasks []task) {
 					Name: "pop",
 				},
 				{
-					Name: "push",
-					Step: -8,
+					Name: "get_max",
 				},
 				{
-					Name: "get_max",
+					Name: "pop",
 				},
 				{
 					Name: "get_max",
 				},
 			},
-			Result: []string{"error", "error", "9", "-8", "-8"},
+			Result: []string{"error", "error", "4", "None"},
+		},
+		task{
+			N: 12,
+			Input: []command{
+				{
+					Name: "pop",
+				},
+				{
+					Name: "get_max",
+				},
+				{
+					Name: "pop",
+				},
+				{
+					Name: "pop",
+				},
+				{
+					Name: "pop",
+				},
+				{
+					Name: "push",
+					Step: -6,
+				},
+				{
+					Name: "pop",
+				},
+				{
+					Name: "get_max",
+				},
+				{
+					Name: "pop",
+				},
+				{
+					Name: "pop",
+				},
+				{
+					Name: "push",
+					Step: -6,
+				},
+				{
+					Name: "get_max",
+				},
+			},
+			Result: []string{"error", "None", "error", "error", "error", "None", "error", "error", "-6"},
 		},
 	)
 
