@@ -117,7 +117,3 @@ func generateTasks() (tasks []task) {
 
 	return
 }
-
-func getNumOperation(n int) *int {
-	return &n
-}
