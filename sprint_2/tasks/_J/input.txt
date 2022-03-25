@@ -1,0 +1,11 @@
+10
+put -34
+put -23
+get
+size
+get
+size
+get
+get
+put 80
+size
