@@ -14,10 +14,9 @@ func main() {
 
 // solution решение задачи
 func solution(n int) int {
-	if n == 0 || n == 1 {
+	if n <= 1 {
 		return 1
 	}
 
-	a, b := solution(n-1), solution(n-2)
-	return a + b
+	return solution(n-1) + solution(n-2)
 }
