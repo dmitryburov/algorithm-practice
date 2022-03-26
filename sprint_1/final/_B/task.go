@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-// ID посылки: 66335150
-// Предыдущий ID посылки: 66293083
 func main() {
 
 	const matrixCnt = 4
@@ -20,7 +18,6 @@ func main() {
 		showError(err)
 	}
 
-	// алгоритм
 	result := solution(matrixCnt, k, numbers)
 	fmt.Println(result)
 }

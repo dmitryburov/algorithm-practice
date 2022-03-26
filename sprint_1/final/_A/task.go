@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-// ID посылки: 66363047
-// Предыдущий ID посылки: 66269683
 func main() {
 
 	n, numbers, err := getInputData()
@@ -135,6 +133,5 @@ func outputFile(data string) error {
 
 // showError обработка ошибки
 func showError(err error) {
-	// не буду сильно заморачиваться, но можно облагородить =)
 	panic(err)
 }
