@@ -1,12 +1,15 @@
 package main
 
-//type ListNode struct {
-//	data   string
-//	next *ListNode
-//}
+// ListNode
+// Comment it before submitting
+type ListNode struct {
+	data string
+	next *ListNode
+}
 
 var idxNode = 0
 
+// Solution решение
 func Solution(head *ListNode, elem string) int {
 
 	if elem == head.data {
