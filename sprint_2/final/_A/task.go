@@ -8,20 +8,6 @@ import (
 	"strings"
 )
 
-/*
--- ПРИНЦИП РАБОТЫ --
-
-
--- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
-
-
--- ВРЕМЕННАЯ СЛОЖНОСТЬ --
-
-
--- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
-
-*/
-
 // Deque двусторонняя очередь
 type Deque struct {
 	stack []int
@@ -34,7 +20,7 @@ type Deque struct {
 // command команда действия
 type command struct {
 	action string
-	num    *int
+	num    int
 }
 
 func main() {
@@ -82,15 +68,12 @@ func (q *Deque) Run(commands []command) []string {
 }
 
 // pushBack добавить элемент в конец
-func (q *Deque) pushBack(value *int) error {
+func (q *Deque) pushBack(value int) error {
 	if q.isMax() {
 		return fmt.Errorf("error")
 	}
-	if value == nil {
-		return fmt.Errorf("empty")
-	}
 
-	q.stack[q.tail] = *value
+	q.stack[q.getIndex(q.tail)] = value
 	q.tail = (q.tail + 1) % q.maxSize
 	q.size++
 
@@ -98,15 +81,12 @@ func (q *Deque) pushBack(value *int) error {
 }
 
 // pushFront добавить элемент в начало
-func (q *Deque) pushFront(value *int) error {
+func (q *Deque) pushFront(value int) error {
 	if q.isMax() {
 		return fmt.Errorf("error")
 	}
-	if value == nil {
-		return fmt.Errorf("empty")
-	}
 
-	q.stack[q.getIndex(q.head-1)] = *value
+	q.stack[q.getIndex(q.head-1)] = value
 	q.head = (q.head - 1) % q.maxSize
 	q.size++
 
@@ -119,8 +99,9 @@ func (q *Deque) popBack() string {
 		return "error"
 	}
 
-	var x int
-	x, q.stack[q.getIndex(q.tail-1)] = q.stack[q.getIndex(q.tail-1)], 0
+	x := q.stack[q.getIndex(q.tail-1)]
+	q.stack[q.getIndex(q.tail-1)] = 0
+
 	q.tail = (q.tail - 1) % q.maxSize
 	q.size--
 
@@ -133,9 +114,10 @@ func (q *Deque) popFront() string {
 		return "error"
 	}
 
-	var x int
-	x, q.stack[q.getIndex(q.head)] = q.stack[q.getIndex(q.head)], 0
-	q.tail = (q.head + 1) % q.maxSize
+	x := q.stack[q.getIndex(q.head)]
+	q.stack[q.getIndex(q.head)] = 0
+
+	q.head = (q.head + 1) % q.maxSize
 	q.size--
 
 	return fmt.Sprint(x)
@@ -143,11 +125,8 @@ func (q *Deque) popFront() string {
 
 // getIndex перевод "обратных" индексов
 func (q *Deque) getIndex(index int) int {
-	fmt.Println(q.stack)
-	fmt.Println(index)
-
 	if index < 0 {
-		return len(q.stack) - 1 + index
+		return len(q.stack) + index
 	}
 
 	return index
@@ -195,7 +174,6 @@ func getInputData() (q *Deque, commands []command, err error) {
 		maxSize: m,
 	}
 
-	var num int
 	var com command
 	commands = make([]command, 0, n)
 
@@ -207,8 +185,7 @@ func getInputData() (q *Deque, commands []command, err error) {
 			action: comStr[0],
 		}
 		if len(comStr) == 2 {
-			num, _ = strconv.Atoi(comStr[1])
-			com.num = &num
+			com.num, _ = strconv.Atoi(comStr[1])
 		}
 
 		commands = append(commands, com)

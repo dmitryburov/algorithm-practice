@@ -17,7 +17,6 @@ func TestTask(t *testing.T) {
 	var taskItems = generateTasks()
 
 	for i := 0; i < len(taskItems); i++ {
-		fmt.Println(taskItems[i])
 		t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			res := solution(taskItems[i].N, taskItems[i].Input)
 			if strings.Join(res, "") != strings.Join(taskItems[i].Result, "") {
