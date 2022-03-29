@@ -149,6 +149,6 @@ func getInputFromFile() (*os.File, error) {
 }
 
 // showError вывод ошибки
-func showError(err error) {
+func showError(err interface{}) {
 	panic(err)
 }

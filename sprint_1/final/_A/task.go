@@ -132,6 +132,6 @@ func outputFile(data string) error {
 }
 
 // showError обработка ошибки
-func showError(err error) {
+func showError(err interface{}) {
 	panic(err)
 }
