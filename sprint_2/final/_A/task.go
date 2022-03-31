@@ -1,5 +1,7 @@
 package main
 
+// ID посылки: 66612281
+
 import (
 	"bufio"
 	"fmt"
@@ -22,6 +24,16 @@ type command struct {
 	action string
 	num    int
 }
+
+const (
+	ErrStackEmpty = "error"
+	ErrStackMax   = "error"
+
+	ActionPushBack  = "push_back"
+	ActionPushFront = "push_front"
+	ActionPopFront  = "pop_front"
+	ActionPopBack   = "pop_back"
+)
 
 func main() {
 
@@ -46,18 +58,18 @@ func (q *Deque) Run(commands []command) []string {
 	)
 	for i := 0; i < len(commands); i++ {
 		switch commands[i].action {
-		case "push_back":
+		case ActionPushBack:
 			if err = q.pushBack(commands[i].num); err != nil {
 				result = append(result, err.Error())
 			}
 			break
-		case "push_front":
+		case ActionPushFront:
 			if err = q.pushFront(commands[i].num); err != nil {
 				result = append(result, err.Error())
 			}
-		case "pop_front":
+		case ActionPopFront:
 			result = append(result, q.popFront())
-		case "pop_back":
+		case ActionPopBack:
 			result = append(result, q.popBack())
 		default:
 			break
@@ -70,7 +82,7 @@ func (q *Deque) Run(commands []command) []string {
 // pushBack добавить элемент в конец
 func (q *Deque) pushBack(value int) error {
 	if q.isMax() {
-		return fmt.Errorf("error")
+		return fmt.Errorf(ErrStackMax)
 	}
 
 	q.stack[q.getIndex(q.tail)] = value
@@ -83,7 +95,7 @@ func (q *Deque) pushBack(value int) error {
 // pushFront добавить элемент в начало
 func (q *Deque) pushFront(value int) error {
 	if q.isMax() {
-		return fmt.Errorf("error")
+		return fmt.Errorf(ErrStackMax)
 	}
 
 	q.stack[q.getIndex(q.head-1)] = value
@@ -96,7 +108,7 @@ func (q *Deque) pushFront(value int) error {
 // popBack вывести последний элемент и удалить его
 func (q *Deque) popBack() string {
 	if q.isEmpty() {
-		return "error"
+		return ErrStackEmpty
 	}
 
 	x := q.stack[q.getIndex(q.tail-1)]
@@ -111,7 +123,7 @@ func (q *Deque) popBack() string {
 // popFront вывести последний элемент и удалить его
 func (q *Deque) popFront() string {
 	if q.isEmpty() {
-		return "error"
+		return ErrStackEmpty
 	}
 
 	x := q.stack[q.getIndex(q.head)]
