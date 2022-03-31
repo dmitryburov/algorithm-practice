@@ -1,6 +1,6 @@
 package main
 
-// ID посылки: 66612281
+// ID посылки: 66614274
 
 import (
 	"bufio"
@@ -85,7 +85,7 @@ func (q *Deque) pushBack(value int) error {
 		return fmt.Errorf(ErrStackMax)
 	}
 
-	q.stack[q.getIndex(q.tail)] = value
+	q.setStack(q.tail, value)
 	q.tail = (q.tail + 1) % q.maxSize
 	q.size++
 
@@ -98,7 +98,7 @@ func (q *Deque) pushFront(value int) error {
 		return fmt.Errorf(ErrStackMax)
 	}
 
-	q.stack[q.getIndex(q.head-1)] = value
+	q.setStack(q.head-1, value)
 	q.head = (q.head - 1) % q.maxSize
 	q.size++
 
@@ -112,8 +112,8 @@ func (q *Deque) popBack() string {
 	}
 
 	x := q.stack[q.getIndex(q.tail-1)]
-	q.stack[q.getIndex(q.tail-1)] = 0
 
+	q.setStack(q.tail-1, 0)
 	q.tail = (q.tail - 1) % q.maxSize
 	q.size--
 
@@ -127,12 +127,17 @@ func (q *Deque) popFront() string {
 	}
 
 	x := q.stack[q.getIndex(q.head)]
-	q.stack[q.getIndex(q.head)] = 0
 
+	q.setStack(q.head, 0)
 	q.head = (q.head + 1) % q.maxSize
 	q.size--
 
 	return fmt.Sprint(x)
+}
+
+// setStack меняет значение в стеке
+func (q *Deque) setStack(index, value int) {
+	q.stack[q.getIndex(index)] = value
 }
 
 // getIndex перевод "обратных" индексов

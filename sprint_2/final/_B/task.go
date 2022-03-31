@@ -1,5 +1,7 @@
 package main
 
+// ID посылки: 66613162
+
 import (
 	"bufio"
 	"fmt"
@@ -9,8 +11,25 @@ import (
 	"strings"
 )
 
-type Stack struct {
-	items []float64
+const (
+	ErrInputValue = "not found last value"
+
+	ActionPlus     = "+"
+	ActionMinus    = "-"
+	ActionDivision = "/"
+	ActionMulti    = "*"
+)
+
+// Node элемент списка
+type Node struct {
+	value float64
+	next  *Node
+}
+
+// NodeList список
+type NodeList struct {
+	head *Node
+	size int
 }
 
 func main() {
@@ -34,17 +53,17 @@ func main() {
 func solution(operation string) (float64, error) {
 	var (
 		err   error
-		stack = &Stack{}
+		list  = &NodeList{}
 		items = strings.Split(operation, " ")
 		num   float64
 	)
 
 	for i := range items {
-		if items[i] == "+" || // не совсем лаконичное решение :)
-			items[i] == "-" ||
-			items[i] == "*" ||
-			items[i] == "/" {
-			if err = stack.calculate(items[i]); err != nil {
+		if items[i] == ActionPlus ||
+			items[i] == ActionMinus ||
+			items[i] == ActionDivision ||
+			items[i] == ActionMulti {
+			if err = list.calculate(items[i]); err != nil {
 				return 0, err
 			}
 		} else {
@@ -52,74 +71,94 @@ func solution(operation string) (float64, error) {
 			if err != nil {
 				return 0, err
 			}
-			stack.push(num)
+			list.push(num)
 		}
 	}
 
-	return stack.peak()
+	return list.peak()
 }
 
 // calculate производит операцию
-func (s *Stack) calculate(operation string) error {
+func (n *NodeList) calculate(operation string) error {
 
 	var firstNum, secondNum float64
 	var value float64
 	var err error
 
-	secondNum, err = s.pop()
+	secondNum, err = n.pop()
 	if err != nil {
 		return err
 	}
 
-	firstNum, err = s.pop()
+	firstNum, err = n.pop()
 	if err != nil {
 		return err
 	}
 
 	switch operation {
-	case "+":
+	case ActionPlus:
 		value = firstNum + secondNum
 		break
-	case "-":
+	case ActionMinus:
 		value = firstNum - secondNum
 		break
-	case "*":
+	case ActionMulti:
 		value = firstNum * secondNum
 		break
-	case "/":
+	case ActionDivision:
 		value = math.Floor(firstNum / secondNum)
 		break
 	default:
 		break
 	}
 
-	s.push(value)
+	n.push(value)
 	return nil
 }
 
-// pop добавляет элемент
-func (s *Stack) pop() (float64, error) {
-	if len(s.items) > 0 {
-		x := s.items[len(s.items)-1]
-		s.items = s.items[:len(s.items)-1]
+// push добавляет элемент в список
+func (n *NodeList) push(value float64) {
+	node := Node{
+		value: value,
+		next:  nil,
+	}
+
+	if n.head == nil {
+		n.head = &node
+	} else {
+		last := n.head
+		n.head = &node
+		n.head.next = last
+	}
+	n.size++
+}
+
+// pop извлекает элемент из списка
+func (n *NodeList) pop() (float64, error) {
+	if !n.isEmpty() {
+		x := n.head.value
+		head := n.head.next
+		n.head = head
+
+		n.size--
 		return x, nil
 	}
 
-	return 0, fmt.Errorf("stack is empty")
-}
-
-// push добавляет элемент
-func (s *Stack) push(value float64) {
-	s.items = append(s.items, value)
+	return 0, fmt.Errorf(ErrInputValue)
 }
 
 // peak получает последний элемент
-func (s *Stack) peak() (float64, error) {
-	if len(s.items) > 0 {
-		return s.items[len(s.items)-1], nil
+func (n *NodeList) peak() (float64, error) {
+	if !n.isEmpty() {
+		return n.head.value, nil
 	}
 
-	return 0, fmt.Errorf("empty last value")
+	return 0, fmt.Errorf(ErrInputValue)
+}
+
+// isEmpty проверяет пуст ли список
+func (n *NodeList) isEmpty() bool {
+	return n.size == 0
 }
 
 // getInputData парсинг входных данных
