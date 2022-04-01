@@ -1,6 +1,6 @@
 package main
 
-// ID посылки: 66613162
+// ID посылки: 66643660
 
 import (
 	"bufio"
@@ -32,6 +32,11 @@ type NodeList struct {
 	size int
 }
 
+// Action таблица операций
+type Action map[string]func(a, b float64) float64
+
+var actions Action
+
 func main() {
 
 	// получаем данные
@@ -53,16 +58,15 @@ func main() {
 func solution(operation string) (float64, error) {
 	var (
 		err   error
-		list  = &NodeList{}
 		items = strings.Split(operation, " ")
 		num   float64
 	)
 
+	list := &NodeList{}
+	actions.initActions()
+
 	for i := range items {
-		if items[i] == ActionPlus ||
-			items[i] == ActionMinus ||
-			items[i] == ActionDivision ||
-			items[i] == ActionMulti {
+		if actions.isAction(items[i]) {
 			if err = list.calculate(items[i]); err != nil {
 				return 0, err
 			}
@@ -82,7 +86,6 @@ func solution(operation string) (float64, error) {
 func (n *NodeList) calculate(operation string) error {
 
 	var firstNum, secondNum float64
-	var value float64
 	var err error
 
 	secondNum, err = n.pop()
@@ -95,24 +98,7 @@ func (n *NodeList) calculate(operation string) error {
 		return err
 	}
 
-	switch operation {
-	case ActionPlus:
-		value = firstNum + secondNum
-		break
-	case ActionMinus:
-		value = firstNum - secondNum
-		break
-	case ActionMulti:
-		value = firstNum * secondNum
-		break
-	case ActionDivision:
-		value = math.Floor(firstNum / secondNum)
-		break
-	default:
-		break
-	}
-
-	n.push(value)
+	n.push(actions[operation](firstNum, secondNum))
 	return nil
 }
 
@@ -154,6 +140,32 @@ func (n *NodeList) peak() (float64, error) {
 	}
 
 	return 0, fmt.Errorf(ErrInputValue)
+}
+
+// initActions
+func (Action) initActions() {
+	actions = make(map[string]func(a, b float64) float64)
+	actions[ActionPlus] = func(a, b float64) float64 {
+		return a + b
+	}
+	actions[ActionMinus] = func(a, b float64) float64 {
+		return a - b
+	}
+	actions[ActionMulti] = func(a, b float64) float64 {
+		return a * b
+	}
+	actions[ActionDivision] = func(a, b float64) float64 {
+		return math.Floor(a / b)
+	}
+}
+
+// isAction проряет является ил строка операцией
+func (Action) isAction(item string) bool {
+	if _, ok := actions[item]; ok {
+		return true
+	}
+
+	return false
 }
 
 // isEmpty проверяет пуст ли список

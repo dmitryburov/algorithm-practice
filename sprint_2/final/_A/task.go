@@ -1,6 +1,6 @@
 package main
 
-// ID посылки: 66614274
+// ID посылки: 66641053
 
 import (
 	"bufio"
@@ -56,21 +56,16 @@ func (q *Deque) Run(commands []command) []string {
 		err    error
 		result []string
 	)
+
 	for i := 0; i < len(commands); i++ {
 		switch commands[i].action {
-		case ActionPushBack:
-			if err = q.pushBack(commands[i].num); err != nil {
+		case ActionPushBack, ActionPushFront:
+			if err = q.push(commands[i].num, commands[i].action); err != nil {
 				result = append(result, err.Error())
 			}
 			break
-		case ActionPushFront:
-			if err = q.pushFront(commands[i].num); err != nil {
-				result = append(result, err.Error())
-			}
-		case ActionPopFront:
-			result = append(result, q.popFront())
-		case ActionPopBack:
-			result = append(result, q.popBack())
+		case ActionPopFront, ActionPopBack:
+			result = append(result, q.pop(commands[i].action))
 		default:
 			break
 		}
@@ -79,59 +74,43 @@ func (q *Deque) Run(commands []command) []string {
 	return result
 }
 
-// pushBack добавить элемент в конец
-func (q *Deque) pushBack(value int) error {
+// push добавление элемента
+func (q *Deque) push(value int, action string) error {
 	if q.isMax() {
 		return fmt.Errorf(ErrStackMax)
 	}
 
-	q.setStack(q.tail, value)
-	q.tail = (q.tail + 1) % q.maxSize
-	q.size++
-
-	return nil
-}
-
-// pushFront добавить элемент в начало
-func (q *Deque) pushFront(value int) error {
-	if q.isMax() {
-		return fmt.Errorf(ErrStackMax)
+	if action == ActionPushBack {
+		q.setStack(q.tail, value)
+		q.tail = (q.tail + 1) % q.maxSize
+	} else {
+		q.setStack(q.head-1, value)
+		q.head = (q.head - 1) % q.maxSize
 	}
 
-	q.setStack(q.head-1, value)
-	q.head = (q.head - 1) % q.maxSize
 	q.size++
-
 	return nil
 }
 
-// popBack вывести последний элемент и удалить его
-func (q *Deque) popBack() string {
+// pop вывести элемент
+func (q *Deque) pop(action string) string {
 	if q.isEmpty() {
 		return ErrStackEmpty
 	}
 
-	x := q.stack[q.getIndex(q.tail-1)]
+	var x int
 
-	q.setStack(q.tail-1, 0)
-	q.tail = (q.tail - 1) % q.maxSize
-	q.size--
-
-	return fmt.Sprint(x)
-}
-
-// popFront вывести последний элемент и удалить его
-func (q *Deque) popFront() string {
-	if q.isEmpty() {
-		return ErrStackEmpty
+	if action == ActionPopBack {
+		x = q.stack[q.getIndex(q.tail-1)]
+		q.setStack(q.tail-1, 0)
+		q.tail = (q.tail - 1) % q.maxSize
+	} else {
+		x = q.stack[q.getIndex(q.head)]
+		q.setStack(q.head, 0)
+		q.head = (q.head + 1) % q.maxSize
 	}
 
-	x := q.stack[q.getIndex(q.head)]
-
-	q.setStack(q.head, 0)
-	q.head = (q.head + 1) % q.maxSize
 	q.size--
-
 	return fmt.Sprint(x)
 }
 
