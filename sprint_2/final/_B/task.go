@@ -1,7 +1,5 @@
 package main
 
-// ID посылки: 66643660
-
 import (
 	"bufio"
 	"fmt"

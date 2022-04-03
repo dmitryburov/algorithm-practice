@@ -1,7 +1,5 @@
 package main
 
-// ID посылки: 66641053
-
 import (
 	"bufio"
 	"fmt"
@@ -59,13 +57,20 @@ func (q *Deque) Run(commands []command) []string {
 
 	for i := 0; i < len(commands); i++ {
 		switch commands[i].action {
-		case ActionPushBack, ActionPushFront:
-			if err = q.push(commands[i].num, commands[i].action); err != nil {
+		case ActionPushBack:
+			if err = q.pushBack(commands[i].num); err != nil {
 				result = append(result, err.Error())
 			}
 			break
-		case ActionPopFront, ActionPopBack:
-			result = append(result, q.pop(commands[i].action))
+		case ActionPushFront:
+			if err = q.pushFront(commands[i].num); err != nil {
+				result = append(result, err.Error())
+			}
+			break
+		case ActionPopFront:
+			result = append(result, q.popFront())
+		case ActionPopBack:
+			result = append(result, q.popBack())
 		default:
 			break
 		}
@@ -75,48 +80,75 @@ func (q *Deque) Run(commands []command) []string {
 }
 
 // push добавление элемента
-func (q *Deque) push(value int, action string) error {
+func (q *Deque) push(index, direction, value int) (int, error) {
 	if q.isMax() {
-		return fmt.Errorf(ErrStackMax)
+		return index, fmt.Errorf(ErrStackMax)
 	}
 
-	if action == ActionPushBack {
-		q.setStack(q.tail, value)
-		q.tail = (q.tail + 1) % q.maxSize
-	} else {
-		q.setStack(q.head-1, value)
-		q.head = (q.head - 1) % q.maxSize
-	}
-
+	q.setStack(q.getStepIndex(index, direction), value)
 	q.size++
-	return nil
+
+	return (index + direction) % q.maxSize, nil
 }
 
 // pop вывести элемент
-func (q *Deque) pop(action string) string {
+func (q *Deque) pop(index, direction int) (int, string) {
 	if q.isEmpty() {
-		return ErrStackEmpty
+		return index, ErrStackEmpty
 	}
 
-	var x int
-
-	if action == ActionPopBack {
-		x = q.stack[q.getIndex(q.tail-1)]
-		q.setStack(q.tail-1, 0)
-		q.tail = (q.tail - 1) % q.maxSize
-	} else {
-		x = q.stack[q.getIndex(q.head)]
-		q.setStack(q.head, 0)
-		q.head = (q.head + 1) % q.maxSize
-	}
+	x := q.stack[q.getIndex(q.getStepIndex(index, direction))]
+	q.setStack(q.getStepIndex(index, direction), 0)
 
 	q.size--
-	return fmt.Sprint(x)
+	return (index + direction) % q.maxSize, fmt.Sprint(x)
+}
+
+// pushFront добавление элемента в начало
+func (q *Deque) pushFront(value int) (err error) {
+	q.head, err = q.push(q.head, -1, value)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// pushBack добавление элемента в конец
+func (q *Deque) pushBack(value int) (err error) {
+	q.tail, err = q.push(q.tail, 1, value)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// popBack извлечение последнего элемента
+func (q *Deque) popBack() (value string) {
+	q.tail, value = q.pop(q.tail, -1)
+	return
+}
+
+// popFront извлечение первого элемента
+func (q *Deque) popFront() (value string) {
+	q.head, value = q.pop(q.head, 1)
+	return
 }
 
 // setStack меняет значение в стеке
 func (q *Deque) setStack(index, value int) {
 	q.stack[q.getIndex(index)] = value
+}
+
+// getStepIndex
+func (q *Deque) getStepIndex(idx, dn int) int {
+	if dn > 0 {
+		return idx
+	}
+
+	idx += dn
+	return idx
 }
 
 // getIndex перевод "обратных" индексов
@@ -171,7 +203,7 @@ func getInputData() (q *Deque, commands []command, err error) {
 	}
 
 	var com command
-	commands = make([]command, 0, n)
+	commands = make([]command, n)
 
 	for i := 0; i < n; i++ {
 		strNums, _ := reader.ReadString('\n')
@@ -184,7 +216,7 @@ func getInputData() (q *Deque, commands []command, err error) {
 			com.num, _ = strconv.Atoi(comStr[1])
 		}
 
-		commands = append(commands, com)
+		commands[i] = com
 	}
 
 	// clear bufio

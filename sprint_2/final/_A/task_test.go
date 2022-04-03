@@ -127,6 +127,37 @@ func generateTasks() (tasks []task) {
 			},
 			Result: []string{"error", "error", "648", "741", "error"},
 		},
+		task{
+			Deque: &Deque{
+				stack:   make([]int, 6),
+				maxSize: 5,
+			},
+			Commands: []command{
+				{
+					action: "push_front",
+					num:    256,
+				},
+				{
+					action: "pop_back",
+				},
+				{
+					action: "push_back",
+					num:    556,
+				},
+				{
+					action: "push_front",
+					num:    700,
+				},
+				{
+					action: "pop_back",
+				},
+				{
+					action: "push_front",
+					num:    -578,
+				},
+			},
+			Result: []string{"256", "556"},
+		},
 	)
 
 	return
