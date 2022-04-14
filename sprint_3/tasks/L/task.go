@@ -31,13 +31,13 @@ func binarySearch(x int, arr []int, l, r int) int {
 		return -1
 	}
 
-	if arr[l] == x {
+	if arr[l] >= x {
 		return l + 1
 	}
 
 	m := l + (r-l)/2
 
-	if arr[m] == x {
+	if arr[m] >= x {
 		if m == l+1 {
 			return m + 1
 		} else {
