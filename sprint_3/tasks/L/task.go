@@ -14,31 +14,35 @@ func main() {
 		showError(err)
 	}
 
-	fmt.Println(strings.Trim(fmt.Sprint(findDays(n, price, days)), "[]"))
+	fmt.Println(strings.Trim(fmt.Sprint(solution(n, price, days)), "[]"))
 }
 
-func findDays(n, price int, days []int) []int {
+func solution(n, price int, days []int) []int {
 	var day1, day2 int
 
 	day1 = binarySearch(price, days, 0, n)
-	if day1 > 0 {
-		day2 = binarySearch(price*2, days, day1, n)
-	} else {
-		day2 = -1
-	}
+	day2 = binarySearch(price*2, days, 0, n)
 
 	return []int{day1, day2}
 }
 
 func binarySearch(x int, arr []int, l, r int) int {
-	if r <= l {
+	if l >= r {
 		return -1
 	}
 
+	if arr[l] == x {
+		return l + 1
+	}
+
 	m := l + (r-l)/2
-	fmt.Println(l, r, m)
+
 	if arr[m] == x {
-		return m
+		if m == l+1 {
+			return m + 1
+		} else {
+			return binarySearch(x, arr, l, m+1)
+		}
 	} else if arr[m] > x {
 		return binarySearch(x, arr, l, m)
 	} else {

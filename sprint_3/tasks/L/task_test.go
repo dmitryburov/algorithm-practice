@@ -17,7 +17,7 @@ func TestTask(t *testing.T) {
 
 	for i := 0; i < len(taskItems); i++ {
 		t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
-			res := findDays(taskItems[i].N, taskItems[i].X, taskItems[i].Days)
+			res := solution(taskItems[i].N, taskItems[i].X, taskItems[i].Days)
 			if fmt.Sprint(res) != fmt.Sprint(taskItems[i].Result) {
 				t.Errorf("Неверный ответ решения!\nОтвет: %v \nВерно: %v", res, taskItems[i].Result)
 			} else {
