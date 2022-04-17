@@ -26,13 +26,15 @@ func solution(s, t string) string {
 		return "False"
 	}
 
-	for i, j := 0, 0; j < lenT; j++ {
+	var i, j int
+	for j < lenT {
 		if s[i] == t[j] {
 			i++
-			if i == lenS {
+			if i >= lenS {
 				return "True"
 			}
 		}
+		j++
 	}
 
 	return "False"
@@ -40,7 +42,6 @@ func solution(s, t string) string {
 
 func getInputData() (s, t string, err error) {
 	var input *os.File
-	var btStr []byte
 
 	input, err = getInputFromFile()
 	if err != nil {
@@ -51,22 +52,15 @@ func getInputData() (s, t string, err error) {
 		_ = input.Close()
 	}(input)
 
-	reader := bufio.NewReader(input)
+	scanner := bufio.NewScanner(input)
+	scanner.Split(bufio.ScanLines)
 
-	btStr, _, err = reader.ReadLine()
-	if err != nil {
-		return
-	}
-	s = string(btStr)
+	scanner.Scan()
+	s = scanner.Text()
 
-	btStr, _, err = reader.ReadLine()
-	if err != nil {
-		return
-	}
-	t = string(btStr)
+	scanner.Scan()
+	t = scanner.Text()
 
-	// clear bufio
-	defer reader.Reset(reader)
 	return
 }
 
