@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -13,15 +12,16 @@ func main() {
 		showError(err)
 	}
 
-	fmt.Println(solution(strings.TrimSpace(str1), strings.TrimSpace(str2)))
+	fmt.Println(solution(str1, str2))
 }
 
 func solution(s, t string) string {
 	lenS, lenT := len(s), len(t)
 
-	if lenS == 0 {
+	if lenS == 0 || s == " " {
 		return "True"
 	}
+
 	if lenS > lenT {
 		return "False"
 	}
