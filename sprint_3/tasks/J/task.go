@@ -9,11 +9,10 @@ import (
 )
 
 func main() {
-	arr, err := getInputData()
+	_, arr, err := getInputData()
 	if err != nil {
 		showError(err)
 	}
-
 	bubbleSort(arr)
 }
 
@@ -49,9 +48,9 @@ func printArr(arr []int) {
 	fmt.Println(strings.Trim(fmt.Sprint(arr), "[]"))
 }
 
-func getInputData() (arr []int, err error) {
+func getInputData() (n int, arr []int, err error) {
 	var input *os.File
-	var btStr []byte
+	var btStr string
 
 	input, err = getInputFromFile()
 	if err != nil {
@@ -62,24 +61,25 @@ func getInputData() (arr []int, err error) {
 		_ = input.Close()
 	}(input)
 
-	var n int
-	reader := bufio.NewReader(input)
-	btStr, _, err = reader.ReadLine()
-	n, err = strconv.Atoi(string(btStr))
+	scanner := bufio.NewScanner(input)
+	scanner.Split(bufio.ScanLines)
+
+	scanner.Scan()
+	btStr = scanner.Text()
+	n, err = strconv.Atoi(btStr)
 	if err != nil {
 		return
 	}
 
 	arr = make([]int, n)
 
-	btStr, _, err = reader.ReadLine()
-	strArr := strings.Split(string(btStr), " ")
-	for i := 0; i < n; i++ {
+	scanner.Scan()
+	btStr = scanner.Text()
+	strArr := strings.Split(btStr, " ")
+	for i := 0; i < len(strArr); i++ {
 		arr[i], _ = strconv.Atoi(strArr[i])
 	}
 
-	// clear bufio
-	defer reader.Reset(reader)
 	return
 }
 
