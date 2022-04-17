@@ -1,0 +1,6 @@
+5
+alla 4 100
+gena 6 1000
+gosha 2 90
+rita 2 90
+timofey 4 80
