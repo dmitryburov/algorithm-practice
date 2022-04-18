@@ -9,20 +9,28 @@ import (
 )
 
 /*
-ID посылки:
+ID посылки: 67500221
 
 ПРИНЦИП РАБОТЫ ---
+Мы делим масив на меньшие части и потом эти части рекурсивно переупорядовачиваем.
+Комментарии в коде.
 
 ВРЕМЕННАЯ СЛОЖНОСТЬ --
+Алгоритм работает за O(n*log n), тк изначально мы проходим по всему массиву,
+а затем мы повторяем процесс для меньших частей массива.
 
 ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
+Исходный массив состоит из n элементов и занимает О(n) помаяти.
+Поскольку условие задачи ограничивает помять в O(n), то памяти больше не выделяется.
+Дополнительные затраты памяти выходят только на рекурсию и "компаратор".
 
 */
 
 // User пользователь с параметрами
 type User struct {
-	Login         string
-	Success, Fail int
+	Login   string
+	Success int
+	Fail    int
 }
 
 func main() {
@@ -31,8 +39,11 @@ func main() {
 		showError(err)
 	}
 
-	// сортируем
-	quickSort(users, 0, len(users)-1)
+	// если больше 1 для расчета :)
+	if len(users) > 1 {
+		// сортируем
+		quickSort(users, 0, len(users)-1)
+	}
 
 	// выводим
 	for i := 0; i < n; i++ {
@@ -43,11 +54,63 @@ func main() {
 // quickSort сортиравка массива
 func quickSort(arr []User, left, right int) {
 
+	// базовый случай
+	if left >= right {
+		return
+	}
+
+	pivot := sortPart(arr, left, right, comparator)
+
+	quickSort(arr, left, pivot-1)
+	quickSort(arr, pivot+1, right)
 }
 
-// compare сравнение значений (компаратор)
-func compare(a, b int) bool {
-	return a > b
+// sortPart точка опоры и сортировка части массива
+func sortPart(arr []User, left, right int, compare func(a, b User) bool) int {
+	p := arr[left]
+	l := left + 1
+	h := right
+
+	for {
+		for l <= h && compare(arr[h], p) {
+			h--
+		}
+
+		for l <= h && !compare(arr[l], p) {
+			l++
+		}
+
+		if l <= h {
+			arr[l], arr[h] = arr[h], arr[l]
+		} else {
+			break
+		}
+	}
+
+	arr[left], arr[h] = arr[h], arr[left]
+	return h
+}
+
+// comparator сравнение значений (компаратор)
+func comparator(a, b User) bool {
+
+	// если равенство числа решённых задач
+	if a.Success == b.Success {
+
+		// если и в штрафах равенство - выводим по лексике
+		if a.Fail == b.Fail {
+			if strings.Compare(a.Login, b.Login) > 0 {
+				return true
+			}
+			return false
+		}
+
+		// сравним по штрафам
+		return a.Fail > b.Fail
+	}
+
+	// сравним по решенным
+	return a.Success < b.Success
 }
 
 // getInputData подготовка входных данных
