@@ -42,11 +42,11 @@ func getBigNum(arr []string) string {
 func less(a, b string) bool {
 	c, err := strconv.Atoi(a + b)
 	if err != nil {
-		panic(err)
+		showError(err)
 	}
 	d, err := strconv.Atoi(b + a)
 	if err != nil {
-		panic(err)
+		showError(err)
 	}
 
 	return c < d
