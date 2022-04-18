@@ -17,8 +17,7 @@ func main() {
 
 func solution(s, t string) string {
 	lenS, lenT := len(s), len(t)
-
-	if lenS == 0 || s == " " {
+	if lenS == 0 || s == " " || s == t {
 		return "True"
 	}
 
@@ -52,14 +51,9 @@ func getInputData() (s, t string, err error) {
 		_ = input.Close()
 	}(input)
 
-	scanner := bufio.NewScanner(input)
-	scanner.Split(bufio.ScanLines)
-
-	scanner.Scan()
-	s = scanner.Text()
-
-	scanner.Scan()
-	t = scanner.Text()
+	reader := bufio.NewReader(input)
+	s, _ = reader.ReadString('\n')
+	t, _ = reader.ReadString('\n')
 
 	return
 }
