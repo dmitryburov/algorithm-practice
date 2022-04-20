@@ -8,19 +8,9 @@ import (
 )
 
 func main() {
-	items, err := getInputData()
-	if err != nil {
-		showError(err)
-	}
-
-	for i := range items {
-		fmt.Println(i, []byte(i))
-	}
-}
-
-func getInputData() (items map[string]bool, err error) {
 	var input *os.File
-	var bufStr []byte
+	var bufStr string
+	var err error
 	var n int
 
 	input, err = getInputFromFile()
@@ -37,23 +27,21 @@ func getInputData() (items map[string]bool, err error) {
 
 	scanner.Scan()
 	bufStr = scanner.Text()
-	n, err = strconv.Atoi(string(bufStr))
+	n, err = strconv.Atoi(bufStr)
 	if err != nil {
 		return
 	}
 
-	items = make(map[string]bool, n)
+	items := make(map[string]bool, n)
 
 	for i := 0; i < n; i++ {
 		scanner.Scan()
-		bufStr = scanner.Bytes()
-
+		bufStr = scanner.Text()
 		if _, ok := items[bufStr]; !ok {
+			fmt.Println(bufStr)
 			items[bufStr] = true
 		}
 	}
-
-	return
 }
 
 func getInputFromFile() (*os.File, error) {
