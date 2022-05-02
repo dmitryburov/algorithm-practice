@@ -7,67 +7,55 @@ import (
 	"strconv"
 )
 
-type input struct {
-	data,
-	search []string
-}
-
 func main() {
-	data, err := getInputData()
+	var n int
+
+	input, err := getInputData()
 	if err != nil {
 		showError(err)
 	}
 
-	fmt.Println(data)
+	// обрабатываем документы
+	input.Scan()
+	n, err = strconv.Atoi(input.Text())
+	if err != nil {
+		return
+	}
+	for i := 0; i < n; i++ {
+		input.Scan()
+		fmt.Println(input.Text())
+	}
+
+	// обрабатываем запрос
+	input.Scan()
+	n, err = strconv.Atoi(input.Text())
+	if err != nil {
+		return
+	}
+	for i := 0; i < n; i++ {
+		input.Scan()
+		fmt.Println(input.Text())
+	}
+
+}
+
+func testMain(docs, query []string) (result [][]int) {
+	return result
 }
 
 // getInputData подготовка входных данных
-func getInputData() (data *input, err error) {
+func getInputData() (scan *bufio.Scanner, err error) {
 	var input *os.File
-	var bufStr string
-	var n int
 
 	input, err = getInputFromFile()
 	if err != nil {
 		showError(err)
 	}
-	// close file
-	defer func(input *os.File) {
-		_ = input.Close()
-	}(input)
 
 	scanner := bufio.NewScanner(input)
 	scanner.Split(bufio.ScanLines)
 
-	scanner.Scan()
-	bufStr = scanner.Text()
-	n, err = strconv.Atoi(bufStr)
-	if err != nil {
-		return
-	}
-
-	fmt.Println(n)
-	for i := 0; i < n; i++ {
-		scanner.Scan()
-		bufStr = scanner.Text()
-		fmt.Println(bufStr)
-	}
-
-	scanner.Scan()
-	bufStr = scanner.Text()
-	n, err = strconv.Atoi(bufStr)
-	if err != nil {
-		return
-	}
-
-	fmt.Println(n)
-	for i := 0; i < n; i++ {
-		scanner.Scan()
-		bufStr = scanner.Text()
-		fmt.Println(bufStr)
-	}
-
-	return
+	return scanner, nil
 }
 
 // getInputFromFile получение ввода из файла
