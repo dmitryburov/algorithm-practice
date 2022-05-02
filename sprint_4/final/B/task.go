@@ -1,16 +1,25 @@
 package main
 
 /*
-ID посылки:
+ID посылки: 68020093
 
-Работа алгоритма:
+Принцип работы:
+Хеш-таблица сопоставляют уникальный ключ со значением, чтобы обеспечить производительность поиска O(1) в среднем.
+Коллизии решаются с помощью связанного списка (методом цепочек).
+Функция хеширования использует метод Дженкинса и остаток деления по модулю.
+Код подробно прокомментировал ниже.
 
 Временная сложность:
-В лучшем случае все операции происходят за О(1), в худшем случае за O(n)
+В лучшем случае средняя сложность операций (put, get, delete) в хеш-таблице равняется О(1),
+в худшем - за O(n), тк если по хешу элементы попали в односвязный список - нам придется прогуляться по нему.
+Остальное время занимает вычисление хеша.
 
 Пространственная сложность:
+При инициализации хеш-таблицы мы заранее выделяем память на O(n) элементов.
+При решении коллизий используются списки, они хранятся каждый в своей зоне памяти и требуют O(k) памяти,
+где k - количетво элементов списка индекса хеша.
 
-
+P.S. никак не получается корректно объяснить сложности алгоритмов, я старался)))
 */
 import (
 	"bufio"
@@ -27,12 +36,6 @@ const (
 	ActionNone   = "None"
 )
 
-var (
-	minLoadFactor    = 0.25
-	maxLoadFactor    = 0.75
-	defaultTableSize = 3
-)
-
 // Node односвязный список
 type Node struct {
 	key,
@@ -43,50 +46,50 @@ type Node struct {
 // HashTable хеш таблица
 type HashTable struct {
 	buckets []*Node
-	size    int
-}
-
-// HashCommand список команд из input
-type HashCommand struct {
-	Action,
-	Key,
-	Value string
-}
-
-// NewHashTable инициализация новой таблицы
-// таблица с определенным размером (тк не требуется рехеширование и расширение таблицы)
-func NewHashTable(size int) *HashTable {
-	return &HashTable{
-		buckets: make([]*Node, size),
-		size:    size,
-	}
+	size,
+	n int
 }
 
 func main() {
+	var n int
+	var str string
+
+	// получаем input файлом
 	data, err := getInputData()
 	if err != nil {
 		showError(err)
 	}
 
-	h := NewHashTable(len(data))
+	// считываем первое n-число
+	data.Scan()
+	str = data.Text()
+	n, err = strconv.Atoi(str)
+	if err != nil {
+		showError(err)
+	}
 
-	for i := 0; i < len(data)-1; i++ {
-		switch data[i].Action {
+	// инициализируем хэш-таблицу
+	h := NewHashTable(n)
+
+	// перебираем следующие n-команд
+	var arrStr []string
+	for i := 0; i < n; i++ {
+		data.Scan()
+		arrStr = strings.Split(data.Text(), " ")
+
+		switch arrStr[0] {
 		case ActionGet:
-			fmt.Println(ActionGet, data[i].Key)
-			if value, ok := h.GetKey(data[i].Key); ok {
+			if value, ok := h.GetKey(arrStr[1]); ok {
 				fmt.Println(value)
 			} else {
 				fmt.Println(ActionNone)
 			}
 			break
 		case ActionPut:
-			fmt.Println(ActionPut, data[i].Key, data[i].Value)
-			h.PutKey(data[i].Key, data[i].Value)
+			h.PutKey(arrStr[1], arrStr[2])
 			break
 		case ActionDelete:
-			fmt.Println(ActionDelete, data[i].Key)
-			if value, ok := h.DeleteKey(data[i].Key); ok {
+			if value, ok := h.DeleteKey(arrStr[1]); ok {
 				fmt.Println(value)
 			} else {
 				fmt.Println(ActionNone)
@@ -98,47 +101,121 @@ func main() {
 	}
 }
 
+// testMain функция для тестирования
+func testMain(n int, input []string) (result []string) {
+	h := NewHashTable(n)
+	var arrStr []string
+	for i := 0; i < n; i++ {
+		arrStr = strings.Split(input[i], " ")
+
+		switch arrStr[0] {
+		case ActionGet:
+			if value, ok := h.GetKey(arrStr[1]); ok {
+				result = append(result, value)
+			} else {
+				result = append(result, ActionNone)
+			}
+			break
+		case ActionPut:
+			h.PutKey(arrStr[1], arrStr[2])
+			break
+		case ActionDelete:
+			if value, ok := h.DeleteKey(arrStr[1]); ok {
+				result = append(result, value)
+			} else {
+				result = append(result, ActionNone)
+			}
+			break
+		default:
+			break
+		}
+	}
+
+	return
+}
+
+// NewHashTable инициализация новой таблицы
+// таблица с определенным размером (тк рехеширование и масштабирование хеш-таблицы не требуется)
+func NewHashTable(size int) *HashTable {
+	return &HashTable{
+		buckets: make([]*Node, size),
+		n:       size,
+	}
+}
+
 // PutKey добавление пары ключ-значение.
 // Если заданный ключ уже есть в таблице, то соответствующее ему значение обновляется.
-func (h *HashTable) PutKey(key, value string) {
+func (h *HashTable) PutKey(key, value string) bool {
 	index := h.getIndex(key)
+	iterator := h.buckets[index]
+	node := &Node{key, value, nil}
 
-	if h.buckets[index] == nil {
-		h.buckets[index] = &Node{key: key, value: value}
+	if iterator == nil {
+		h.buckets[index] = node
 	} else {
-		startingNode := h.buckets[index]
-		for ; startingNode.next != nil; startingNode = startingNode.next {
-			if startingNode.key == key {
-				startingNode.value = value
-				return
+		prev := &Node{}
+		for iterator != nil {
+			if iterator.key == key {
+				iterator.value = value
+				return false
 			}
+			prev = iterator
+			iterator = iterator.next
 		}
-		startingNode.next = &Node{key: key, value: value}
+		prev.next = node
 	}
+
+	h.size++
+	return true
 }
 
 // GetKey получение значения по ключу.
 // Если ключа нет в таблице, то вывести «None». Иначе вывести найденное значение.
 func (h *HashTable) GetKey(key string) (string, bool) {
 	index := h.getIndex(key)
-	if h.buckets[index] != nil {
-		startingNode := h.buckets[index]
-		for ; ; startingNode = startingNode.next {
-			if startingNode.key == key {
-				return startingNode.value, true
-			}
-			if startingNode.next == nil {
-				break
-			}
+	iterator := h.buckets[index]
+
+	for iterator != nil {
+		if iterator.key == key {
+			return iterator.value, true
 		}
+		iterator = iterator.next
 	}
+
 	return "", false
 }
 
 // DeleteKey удаление ключа из таблицы.
 // Если такого ключа нет, то вывести «None», иначе вывести хранимое по данному ключу значение и удалить ключ.
-func (h *HashTable) DeleteKey(key string) (string, bool) {
-	return "", false
+func (h *HashTable) DeleteKey(key string) (val string, find bool) {
+	index := h.getIndex(key)
+	iterator := h.buckets[index]
+
+	if iterator == nil {
+		return
+	}
+	if iterator.key == key {
+		val = iterator.value
+		find = true
+		h.buckets[index] = iterator.next
+		h.size--
+	} else {
+		prev := iterator
+		iterator = iterator.next
+		for iterator != nil {
+			if iterator.key == key {
+				val = iterator.value
+				find = true
+				prev.next = iterator.next
+				h.size--
+				return
+			}
+			prev = iterator
+			iterator = iterator.next
+		}
+	}
+
+	return
 }
 
 // hash функция хеширования Дженкинса
@@ -158,50 +235,24 @@ func (h *HashTable) hash(key string) (hash uint32) {
 	return
 }
 
-// getIndex
-func (h *HashTable) getIndex(key string) (index int) {
-	return int(h.hash(key)) % h.size
+// getIndex получение хешированного индекса
+func (h *HashTable) getIndex(key string) int {
+	return int(h.hash(key)) % h.n
 }
 
 // getInputData подготовка входных данных
-func getInputData() (data []HashCommand, err error) {
+func getInputData() (scan *bufio.Scanner, err error) {
 	var input *os.File
-	var bufStr string
-	var n int
 
 	input, err = getInputFromFile()
 	if err != nil {
 		showError(err)
 	}
-	// close file
-	defer func(input *os.File) {
-		_ = input.Close()
-	}(input)
 
 	scanner := bufio.NewScanner(input)
 	scanner.Split(bufio.ScanLines)
 
-	scanner.Scan()
-	bufStr = scanner.Text()
-	n, err = strconv.Atoi(bufStr)
-	if err != nil {
-		return
-	}
-
-	data = make([]HashCommand, n)
-	var arrStr []string
-	for i := 0; i < n; i++ {
-		scanner.Scan()
-		arrStr = strings.Split(scanner.Text(), " ")
-		data[i].Action = arrStr[0]
-		data[i].Key = arrStr[1]
-
-		if len(arrStr) == 3 {
-			data[i].Value = arrStr[2]
-		}
-	}
-
-	return
+	return scanner, nil
 }
 
 // getInputFromFile получение ввода из файла
