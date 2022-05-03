@@ -101,8 +101,8 @@ func testMain(docs []string, queries []string) [][]int {
 	s := NewSearch()
 	s.InitDocIndex()
 
-	for i := 1; i <= len(docs); i++ {
-		s.CreateDocIndex(docs, i)
+	for i := 0; i < len(docs); i++ {
+		s.CreateDocIndex(strings.Split(docs[i], " "), i+1)
 	}
 
 	var res = make([][]int, 0, len(queries))
@@ -112,10 +112,9 @@ func testMain(docs []string, queries []string) [][]int {
 		s.InitRelIndex(len(docs))
 		s.InitResultData(searchLimit)
 
-		s.CreateQueryIndex(queries)
+		s.CreateQueryIndex(strings.Split(queries[i], " "))
 
 		s.SortRel()
-
 		res = append(res, s.GetResultQuery())
 	}
 
