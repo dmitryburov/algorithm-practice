@@ -1,11 +1,101 @@
-10
-get 1
-put 1 10
-put 2 4
-get 1
-get 2
-delete 2
-get 2
-put 1 5
-get 1
-delete 2
+100
+delete 125
+get 915
+get 107
+get 211
+get 341
+get 172
+put 993 408
+put 194 126
+put 697 987
+delete 194
+get 697
+get 697
+delete 697
+get 993
+get 361
+put 993 427
+delete 993
+get 967
+get 110
+delete 977
+get 832
+get 621
+delete 127
+delete 419
+get 688
+get 412
+put 882 459
+get 882
+put 882 509
+put 882 698
+put 882 842
+put 44 959
+get 777
+put 773 929
+put 773 30
+get 882
+delete 44
+delete 773
+put 20 989
+get 1000
+get 867
+delete 109
+get 176
+put 882 109
+get 20
+delete 433
+put 457 64
+put 457 261
+get 926
+get 457
+put 882 749
+get 20
+get 20
+delete 20
+put 457 876
+get 457
+get 882
+delete 882
+put 457 437
+delete 457
+get 581
+delete 779
+get 416
+put 770 285
+delete 770
+get 82
+get 312
+get 684
+delete 75
+get 20
+delete 472
+get 987
+get 3
+get 110
+get 936
+get 518
+put 302 38
+delete 302
+put 101 398
+get 899
+put 497 801
+get 497
+get 188
+put 687 558
+get 101
+put 101 327
+delete 687
+get 101
+put 101 332
+get 391
+get 135
+delete 497
+get 101
+get 58
+delete 101
+delete 100
+put 660 256
+get 660
+get 660
+put 660 357

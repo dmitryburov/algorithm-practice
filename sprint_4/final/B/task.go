@@ -240,6 +240,20 @@ func (h *HashTable) getIndex(key string) int {
 	return int(h.hash(key)) % h.n
 }
 
+// findElement поиск элемента
+func (h *HashTable) findElement(iterator *Node, prev *Node, key string) *Node {
+	for iterator != nil {
+		if iterator.key == key {
+			return iterator
+		}
+
+		prev = iterator
+		iterator = iterator.next
+	}
+
+	return nil
+}
+
 // getInputData подготовка входных данных
 func getInputData() (scan *bufio.Scanner, err error) {
 	var input *os.File
