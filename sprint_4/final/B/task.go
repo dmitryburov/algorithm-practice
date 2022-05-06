@@ -1,7 +1,7 @@
 package main
 
 /*
-ID посылки: 68020093
+ID посылки: 68155373
 
 Принцип работы:
 Хеш-таблица сопоставляют уникальный ключ со значением, чтобы обеспечить производительность поиска O(1) в среднем.
@@ -20,6 +20,8 @@ ID посылки: 68020093
 где k - количетво элементов списка индекса хеша.
 
 P.S. никак не получается корректно объяснить сложности алгоритмов, я старался)))
+
+P.P.S сделал внутри структуры HashTable Node list для функции findElement
 */
 import (
 	"bufio"
@@ -46,7 +48,10 @@ type Node struct {
 // HashTable хеш таблица
 type HashTable struct {
 	buckets []*Node
-	size,
+	list    struct {
+		iterator *Node
+		prev     *Node
+	}
 	n int
 }
 
@@ -145,41 +150,34 @@ func NewHashTable(size int) *HashTable {
 
 // PutKey добавление пары ключ-значение.
 // Если заданный ключ уже есть в таблице, то соответствующее ему значение обновляется.
-func (h *HashTable) PutKey(key, value string) bool {
+func (h *HashTable) PutKey(key, value string) {
 	index := h.getIndex(key)
-	iterator := h.buckets[index]
-	node := &Node{key, value, nil}
+	node := Node{key, value, nil}
 
-	if iterator == nil {
-		h.buckets[index] = node
-	} else {
-		prev := &Node{}
-		for iterator != nil {
-			if iterator.key == key {
-				iterator.value = value
-				return false
-			}
-			prev = iterator
-			iterator = iterator.next
-		}
-		prev.next = node
+	if h.buckets[index] == nil {
+		h.buckets[index] = &node
+		return
 	}
 
-	h.size++
-	return true
+	h.list.iterator = h.buckets[index]
+	h.list.prev = &Node{}
+
+	if find := h.findElement(index, key); find {
+		h.list.iterator.value = value
+		return
+	}
+
+	h.list.prev.next = &node
 }
 
 // GetKey получение значения по ключу.
 // Если ключа нет в таблице, то вывести «None». Иначе вывести найденное значение.
 func (h *HashTable) GetKey(key string) (string, bool) {
 	index := h.getIndex(key)
-	iterator := h.buckets[index]
 
-	for iterator != nil {
-		if iterator.key == key {
-			return iterator.value, true
-		}
-		iterator = iterator.next
+	h.list.iterator = h.buckets[index]
+	if find := h.findElement(index, key); find {
+		return h.list.iterator.value, true
 	}
 
 	return "", false
@@ -189,29 +187,19 @@ func (h *HashTable) GetKey(key string) (string, bool) {
 // Если такого ключа нет, то вывести «None», иначе вывести хранимое по данному ключу значение и удалить ключ.
 func (h *HashTable) DeleteKey(key string) (val string, find bool) {
 	index := h.getIndex(key)
-	iterator := h.buckets[index]
+	h.list.iterator = h.buckets[index]
 
-	if iterator == nil {
+	if h.list.iterator == nil {
 		return
-	}
-	if iterator.key == key {
-		val = iterator.value
-		find = true
-		h.buckets[index] = iterator.next
-		h.size--
+
+	} else if h.list.iterator.key == key {
+		h.buckets[index] = h.list.iterator.next
+		return h.list.iterator.value, true
+
 	} else {
-		prev := iterator
-		iterator = iterator.next
-		for iterator != nil {
-			if iterator.key == key {
-				val = iterator.value
-				find = true
-				prev.next = iterator.next
-				h.size--
-				return
-			}
-			prev = iterator
-			iterator = iterator.next
+		if find = h.findElement(index, key); find {
+			h.list.prev.next = h.list.iterator.next
+			return h.list.iterator.value, true
 		}
 	}
 
@@ -241,17 +229,15 @@ func (h *HashTable) getIndex(key string) int {
 }
 
 // findElement поиск элемента
-func (h *HashTable) findElement(iterator *Node, prev *Node, key string) *Node {
-	for iterator != nil {
-		if iterator.key == key {
-			return iterator
+func (h *HashTable) findElement(index int, key string) bool {
+	for h.list.iterator != nil {
+		if h.list.iterator.key == key {
+			return true
 		}
-
-		prev = iterator
-		iterator = iterator.next
+		h.list.prev = h.list.iterator
+		h.list.iterator = h.list.iterator.next
 	}
-
-	return nil
+	return false
 }
 
 // getInputData подготовка входных данных
