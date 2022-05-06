@@ -80,5 +80,35 @@ func generateTasks() []*task {
 				{3, 1, 2},
 			},
 		},
+		{
+			Input: struct{ Docs, Query []string }{
+				Docs: []string{
+					"tjegerxbyk pdvmj wulmqfrx",
+					"pndygsm dvjihmxr tcdtqsmfe",
+					"txamzxqzeq dxkxwq aua",
+					"hsciljsrdo fipazun kngi",
+					"xtkomk aua wulmqfrx ydkbncmzee",
+					"pndygsm cqvffye pyrhcxbcef",
+					"szyc uffqhayg ccktodig",
+					"ntr wpvlifrgjg htywpe",
+					"kngi tjegerxbyk zsnfd",
+					"tqilkkd gq qc fipazun",
+				},
+				Query: []string{
+					"dxkxwq htywpe",
+					"aua tjegerxbyk",
+					"xtkomk tjegerxbyk",
+					"szyc fipazun",
+					"xtkomk tjegerxbyk",
+				},
+			},
+			Result: [][]int{
+				{3, 8},
+				{1, 3, 5, 9},
+				{1, 5, 9},
+				{4, 7, 10},
+				{1, 5, 9},
+			},
+		},
 	}
 }

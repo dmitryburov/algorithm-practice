@@ -18,9 +18,6 @@ O(m * k * n * nlog(n)), где m - число запросов, k - число �
 Пространственная сложность:
 O(m+n+d), m для индекса документов, n для агрегирующей мапы, d для отсортированного слайса документов
 
-P.S. Долго боролся с TL теста 27 (когда состав документов и запросов одинаковый), поборол как мог, пришлось ворошить slack-чаты и гугл =)
-Смущает что время практически впритык к лимиту
-
 */
 
 import (
@@ -32,8 +29,11 @@ import (
 	"strings"
 )
 
-// searchLimit лимит на количество ролевантных документов
-const searchLimit = 5
+// SearchLimit лимит на количество ролевантных документов
+// Комментарий:
+// Да, но это константа подразумевает использование "внутри пакета", те private
+// Я конечно же переименовал, но это вроде не best practices =)
+const SearchLimit = 5
 
 // searchDoc ролевантный документ
 type searchDoc struct {
@@ -84,13 +84,10 @@ func main() {
 		input.Scan()
 
 		s.InitRelIndex(nd)
-		s.InitResultData(searchLimit)
+		s.InitResultData(SearchLimit)
 
 		// релевантность документа по слову
 		s.CreateQueryIndex(strings.Split(input.Text(), " "))
-
-		// сортируем
-		s.SortRel()
 
 		// получаем результат
 		fmt.Println(strings.Trim(fmt.Sprint(s.GetResultQuery()), "[]"))
@@ -110,11 +107,9 @@ func testMain(docs []string, queries []string) [][]int {
 	for i := 0; i < len(queries); i++ {
 
 		s.InitRelIndex(len(docs))
-		s.InitResultData(searchLimit)
+		s.InitResultData(SearchLimit)
 
 		s.CreateQueryIndex(strings.Split(queries[i], " "))
-
-		s.SortRel()
 		res = append(res, s.GetResultQuery())
 	}
 
@@ -197,7 +192,7 @@ func (s *Search) CreateQueryIndex(words []string) {
 // GetResultQuery результат первых 5ти документов (если ролевантность больше 0)
 func (s *Search) GetResultQuery() []int {
 	for k, d := range s.RelIndex {
-		if k >= searchLimit || d.rel == 0 {
+		if k >= SearchLimit || d.rel == 0 {
 			break
 		}
 		s.Result = append(s.Result, d.idx)
