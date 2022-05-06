@@ -33,11 +33,7 @@ var nodeList *List
 // HashTable хеш таблица
 type HashTable struct {
 	buckets []*Node
-	list    struct {
-		iterator *Node
-		prev     *Node
-	}
-	n int
+	n       int
 }
 
 func main() {
