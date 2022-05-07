@@ -1,51 +1,27 @@
 package main
 
-/*
-
-ID посылки: 68060956
-
-Принцип работы:
-Алгоритм состоит в основном из 2х этапов:
-1й - сбор индекса слов по документам, для этого создается мапа с индексом слов с мапой документов и количество вхождений этого слова
-2й - обработка запроса, где вычленяем уникальные входдения слов и составляем ролевантность документов исходя из совпаения 1го этапа (суммируем к документам входения)
-Далее сортируем и выводим первые 5 документов (у которых больше 0 ролевантность)
-
-Временная сложность:
-O(n*k), где n - количество документов, k - количество слов в документе:
-+
-O(m * k * n * nlog(n)), где m - число запросов, k - число уникальных слов в запросе (>=m), n - число документов
-
-Пространственная сложность:
-O(m+n+d), m для индекса документов, n для агрегирующей мапы, d для отсортированного слайса документов
-
-*/
-
 import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 )
 
 // SearchLimit лимит на количество ролевантных документов
-// Комментарий:
-// Да, но это константа подразумевает использование "внутри пакета", те private
-// Я конечно же переименовал, но это вроде не best practices =)
 const SearchLimit = 5
 
-// searchDoc ролевантный документ
-type searchDoc struct {
-	idx,
-	rel int
+// SearchDoc ролевантный документ
+type SearchDoc struct {
+	id,
+	cnt int
 }
 
 // Search поисковая структура
 type Search struct {
-	DocIndex map[string]map[int]int
-	RelIndex []*searchDoc
-	Result   []int
+	DocIndex   map[string]map[int]int
+	QueryIndex []*SearchDoc
+	Result     []int
 }
 
 func main() {
@@ -63,8 +39,9 @@ func main() {
 		return
 	}
 
-	s := NewSearch()
-	s.InitDocIndex()
+	s := &Search{
+		DocIndex: make(map[string]map[int]int),
+	}
 
 	// собираем индексы по документам
 	for i = 1; i <= nd; i++ {
@@ -83,7 +60,7 @@ func main() {
 	for i = 0; i < nq; i++ {
 		input.Scan()
 
-		s.InitRelIndex(nd)
+		s.InitRelIndex(nq)
 		s.InitResultData(SearchLimit)
 
 		// релевантность документа по слову
@@ -95,8 +72,9 @@ func main() {
 }
 
 func testMain(docs []string, queries []string) [][]int {
-	s := NewSearch()
-	s.InitDocIndex()
+	s := &Search{
+		DocIndex: make(map[string]map[int]int),
+	}
 
 	for i := 0; i < len(docs); i++ {
 		s.CreateDocIndex(strings.Split(docs[i], " "), i+1)
@@ -116,16 +94,6 @@ func testMain(docs []string, queries []string) [][]int {
 	return res
 }
 
-// NewSearch инициализация основной структуры
-func NewSearch() *Search {
-	return &Search{}
-}
-
-// InitDocIndex инициализация структуры индекса документов
-func (s *Search) InitDocIndex() {
-	s.DocIndex = make(map[string]map[int]int)
-}
-
 // InitResultData инициализация ответа ролевантных докментов
 func (s *Search) InitResultData(size int) {
 	s.Result = make([]int, 0, size)
@@ -133,18 +101,7 @@ func (s *Search) InitResultData(size int) {
 
 // InitRelIndex инициализация индекса ролевантных докментов
 func (s *Search) InitRelIndex(size int) {
-	s.RelIndex = make([]*searchDoc, 0, size)
-}
-
-// SortRel сортировка документов
-// если релевантности документов совпадают —– то по возрастанию их порядковых номеров в базе
-func (s *Search) SortRel() {
-	sort.Slice(s.RelIndex, func(i, j int) bool {
-		if s.RelIndex[i].rel != s.RelIndex[j].rel {
-			return s.RelIndex[i].rel > s.RelIndex[j].rel
-		}
-		return s.RelIndex[i].idx < s.RelIndex[j].idx
-	})
+	s.QueryIndex = make([]*SearchDoc, 0, size)
 }
 
 // CreateDocIndex обработка слов и построение индекса по документу
@@ -168,8 +125,6 @@ func (s *Search) CreateQueryIndex(words []string) {
 	mapIdx := make(map[int]int)
 	uniqueWords := make(map[string]struct{})
 
-	//s.RelIndex = append(s.RelIndex, &searchDoc{docId: n, rel: r})
-
 	for j := 0; j < len(words); j++ {
 		// только уникальные слова
 		if _, ok := uniqueWords[words[j]]; !ok {
@@ -177,28 +132,58 @@ func (s *Search) CreateQueryIndex(words []string) {
 			if docCnt, find := s.DocIndex[words[j]]; find {
 				for k, v := range docCnt {
 					if _, yes := mapIdx[k]; !yes {
-						s.RelIndex = append(s.RelIndex, &searchDoc{idx: k, rel: v})
-						mapIdx[k] = len(s.RelIndex) - 1
+						s.QueryIndex = append(s.QueryIndex, &SearchDoc{id: k, cnt: v})
+						mapIdx[k] = len(s.QueryIndex) - 1
 					} else {
-						s.RelIndex[mapIdx[k]].rel += v
+						s.QueryIndex[mapIdx[k]].cnt += v
 					}
 				}
 				uniqueWords[words[j]] = struct{}{}
 			}
 		}
 	}
+
+	// сортируем
+	s.SortIndex()
 }
 
 // GetResultQuery результат первых 5ти документов (если ролевантность больше 0)
 func (s *Search) GetResultQuery() []int {
-	for k, d := range s.RelIndex {
-		if k >= SearchLimit || d.rel == 0 {
+	for i := 0; i < len(s.QueryIndex); i++ {
+		if i >= SearchLimit {
 			break
 		}
-		s.Result = append(s.Result, d.idx)
+		s.Result = append(s.Result, s.QueryIndex[i].id)
 	}
 
 	return s.Result
+}
+
+// SortIndex сортировка документов (пузырьком)
+func (s *Search) SortIndex() {
+	if len(s.QueryIndex) == 0 {
+		return
+	}
+
+	for i := 0; i < len(s.QueryIndex); i++ {
+		// больше 5ти не требуется
+		if i > SearchLimit {
+			break
+		}
+
+		// гоним максимальным значением вверх
+		for j := len(s.QueryIndex) - 1; j > i; j-- {
+			if s.QueryIndex[j-1].cnt < s.QueryIndex[j].cnt ||
+				(s.QueryIndex[j-1].cnt == s.QueryIndex[j].cnt && s.QueryIndex[j].id < s.QueryIndex[j-1].id) {
+				s.SwapResult(j-1, j)
+			}
+		}
+	}
+}
+
+// SwapResult идеоматический свап
+func (s *Search) SwapResult(i, j int) {
+	s.QueryIndex[i], s.QueryIndex[j] = s.QueryIndex[j], s.QueryIndex[i]
 }
 
 // getInputData подготовка входных данных
