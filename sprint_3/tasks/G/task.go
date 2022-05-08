@@ -23,7 +23,7 @@ func main() {
 	}
 
 	input.Scan()
-	arrStr := strings.Split(input.Text(), " ")
+	arrStr := strings.Fields(input.Text())
 	fmt.Println(len(arrStr))
 	if _, err := solution(n, arrStr); err != nil {
 		showError(err)
