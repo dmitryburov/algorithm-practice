@@ -24,11 +24,10 @@ func main() {
 
 	input.Scan()
 	arrStr := strings.Fields(input.Text())
-	fmt.Println(len(arrStr))
-	if _, err := solution(n, arrStr); err != nil {
+	if res, err := solution(n, arrStr); err != nil {
 		showError(err)
 	} else {
-		//fmt.Println(strings.Join(res, " "))
+		fmt.Println(strings.Join(res, " "))
 	}
 }
 
@@ -36,7 +35,7 @@ func solution(n int, arr []string) ([]string, error) {
 	if n == 0 {
 		return nil, nil
 	}
-	counter := make([]int, 0, 3)
+	counter := [3]int{}
 
 	for i := 0; i < len(arr); i++ {
 		if arr[i] == "" {
@@ -51,7 +50,6 @@ func solution(n int, arr []string) ([]string, error) {
 	}
 
 	result := make([]string, n)
-	fmt.Println(counter)
 	i := 0
 	for g, v := range counter {
 		for v > 0 {
@@ -67,6 +65,7 @@ func solution(n int, arr []string) ([]string, error) {
 // getInputData подготовка входных данных
 func getInputData() (scan *bufio.Scanner, err error) {
 	var input *os.File
+	const maxCapacity = 1024 * 1024 * 10
 
 	input, err = getInputFromFile()
 	if err != nil {
@@ -74,6 +73,10 @@ func getInputData() (scan *bufio.Scanner, err error) {
 	}
 
 	scanner := bufio.NewScanner(input)
+
+	buf := make([]byte, maxCapacity)
+	scanner.Buffer(buf, maxCapacity)
+
 	scanner.Split(bufio.ScanLines)
 
 	return scanner, nil
