@@ -24,11 +24,11 @@ package main
 // Node do not declare Node in your submit-file 
 type Node struct {
 	value    int
-	left   ∗Node
-	right  ∗Node
+	left   *Node
+	right  *Node
 }
 
-func remove(node ∗Node, key int) ∗Node {
+func remove(node *Node, key int) *Node {
 	// your solution
 }
 ```
