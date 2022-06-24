@@ -1,5 +1,27 @@
 package main
 
+/*
+--- ID посылки:
+69176446
+
+--- Принцип работы:
+Благодаря занятиям и методам сортировок из предыдущих спринтов + достаточно хорошо описаная теория о просеивании, то можно сказать, что нужно было
+просто реализовать.
+
+Если кратко, то Append добавляет эелемент в очередь, не забывая чтобы в самом начале был самый приоритетный элемент,
+с помощью UpSifting
+После того, как все эелементы добавлены, забираются приоритетные элементы с помощью Next, который
+поддерживает, чтобы самый второй по приоритетности элемент оказался на вершине кучи с помощью DownSifting
+
+Методы дополнительно прокомментировал в коде.
+
+--- Временная сложность:
+В целом временная сложность равна O(n * log n), но почему-то меня терзают сомнения, возможно не учел константу где-то?
+
+--- Пространственная сложность:
+По факту иы имеем слайс очереди и несколько переменных, поэтому предполагаю что пространственная сложность = O9(n)
+*/
+
 import (
 	"bufio"
 	"fmt"
@@ -9,52 +31,90 @@ import (
 	"strings"
 )
 
+// CompetitionResult структура элемента
 type CompetitionResult struct {
-	name       string
-	completeEx int
-	penalty    int
+	name     string
+	complete int
+	fail     int
 }
 
-type PriorityQueue struct {
-	queue         []CompetitionResult
-	lastItemIndex int
+// Queue структура очереди
+type Queue struct {
+	queue     []CompetitionResult
+	lastIndex int
 }
 
-func (pq *PriorityQueue) Append(cr CompetitionResult) {
-	pq.lastItemIndex++
-	pq.queue[pq.lastItemIndex] = cr
-	pq.SiftUpBalance(pq.lastItemIndex)
+func main() {
+	res := strings.Builder{}
+	PyramidSort(os.Stdin, &res)
+
+	fmt.Println(res.String())
 }
 
-func (pq *PriorityQueue) Next() CompetitionResult {
+// PyramidSort основная функция на вход
+func PyramidSort(r io.Reader, w *strings.Builder) {
+	scanner := bufio.NewScanner(r)
+	scanner.Scan()
 
+	n, _ := strconv.Atoi(scanner.Text())
+	pq := Queue{queue: make([]CompetitionResult, n+1), lastIndex: 0}
+
+	for i := 0; i < n; i++ {
+		scanner.Scan()
+		fields := strings.Fields(scanner.Text())
+		name := fields[0]
+		complete, _ := strconv.Atoi(fields[1])
+		fail, _ := strconv.Atoi(fields[2])
+		pq.Append(CompetitionResult{name, complete, fail})
+	}
+
+	for i := 0; i < n; i++ {
+		w.WriteString(pq.Next().name)
+		w.WriteByte('\n')
+	}
+}
+
+// Append добавление элемента в очередь
+func (pq *Queue) Append(cr CompetitionResult) {
+	pq.lastIndex++
+	pq.queue[pq.lastIndex] = cr
+	pq.UpSifting(pq.lastIndex)
+}
+
+// Next получение приоритетного элемента из кучи
+func (pq *Queue) Next() CompetitionResult {
 	defer func() {
-		pq.queue[1] = pq.queue[pq.lastItemIndex]
-		pq.queue = pq.queue[:pq.lastItemIndex]
-		pq.SiftDownBalance(1)
-		pq.lastItemIndex--
+		pq.queue[1] = pq.queue[pq.lastIndex]
+		pq.queue = pq.queue[:pq.lastIndex]
+		pq.DownSifting(1)
+		pq.lastIndex--
 	}()
+
 	return pq.queue[1]
 }
 
-func (pq PriorityQueue) SiftUpBalance(index int) {
+// UpSifting просеивания вверх
+func (pq Queue) UpSifting(index int) {
 	if index == 1 {
 		return
 	}
-	parrentIndex := index >> 1
-	if pq.Less(index, parrentIndex) {
-		pq.Swap(index, parrentIndex)
-		pq.SiftUpBalance(parrentIndex)
-	}
 
+	parentIndex := index >> 1
+
+	if pq.Less(index, parentIndex) {
+		pq.Swap(index, parentIndex)
+		pq.UpSifting(parentIndex)
+	}
 }
 
-func (pq PriorityQueue) SiftDownBalance(index int) {
+// DownSifting просеивания вниз
+func (pq Queue) DownSifting(index int) {
 	left := index * 2
 	right := index*2 + 1
 	if left >= pq.Len() {
 		return
 	}
+
 	best := 0
 
 	if right < pq.Len() && pq.Less(right, left) {
@@ -65,76 +125,51 @@ func (pq PriorityQueue) SiftDownBalance(index int) {
 
 	if pq.Less(best, index) {
 		pq.Swap(best, index)
-		pq.SiftDownBalance(best)
+		pq.DownSifting(best)
 	}
 }
 
-func (pq PriorityQueue) Less(a, b int) bool {
-	if pq.queue[a].completeEx == pq.queue[b].completeEx {
-		if pq.queue[a].penalty == pq.queue[b].penalty {
-			return compareStings(pq.queue[a].name, pq.queue[b].name)
+// Less проверка приоритета
+func (pq Queue) Less(a, b int) bool {
+	if pq.queue[a].complete == pq.queue[b].complete {
+		if pq.queue[a].fail == pq.queue[b].fail {
+			return comparator(pq.queue[a].name, pq.queue[b].name)
 		} else {
-			return pq.queue[a].penalty <= pq.queue[b].penalty
+			return pq.queue[a].fail <= pq.queue[b].fail
 		}
 	} else {
-		return pq.queue[a].completeEx >= pq.queue[b].completeEx
+		return pq.queue[a].complete >= pq.queue[b].complete
 	}
 }
 
-func (pq PriorityQueue) Swap(a, b int) {
+// Swap классическая функция смены
+func (pq Queue) Swap(a, b int) {
 	pq.queue[a], pq.queue[b] = pq.queue[b], pq.queue[a]
 }
 
-func (pq PriorityQueue) Len() int {
+// Len текущий размер очереди
+func (pq Queue) Len() int {
 	return len(pq.queue)
 }
 
-func PyramidSort(r io.Reader) {
-	scanner := bufio.NewScanner(r)
-	scanner.Scan()
-
-	n, _ := strconv.Atoi(scanner.Text())
-	pq := PriorityQueue{queue: make([]CompetitionResult, n+1), lastItemIndex: 0}
-
-	for i := 0; i < n; i++ {
-		scanner.Scan()
-		fields := strings.Fields(scanner.Text())
-		name := fields[0]
-		completeEx, _ := strconv.Atoi(fields[1])
-		penalty, _ := strconv.Atoi(fields[2])
-		pq.Append(CompetitionResult{name, completeEx, penalty})
-	}
-
-	writer := strings.Builder{}
-	for i := 0; i < n; i++ {
-		writer.WriteString(pq.Next().name)
-		writer.WriteByte('\n')
-	}
-
-	fmt.Println(writer.String())
-}
-
-func compareStings(s1, s2 string) bool {
-	s1Lenght := len(s1)
-	s2Lenght := len(s2)
-	minLenght := 0
-	if s1Lenght > s2Lenght {
-		minLenght = s2Lenght
+// comparator компоратор для сравнения
+func comparator(s1, s2 string) bool {
+	s1Len := len(s1)
+	s2Len := len(s2)
+	minLen := 0
+	if s1Len > s2Len {
+		minLen = s2Len
 	} else {
-		minLenght = s1Lenght
+		minLen = s1Len
 	}
 	i, sum1, sum2 := 0, 0, 0
-	for i < minLenght && sum1 == sum2 {
+	for i < minLen && sum1 == sum2 {
 		sum1 += int(s1[i])
 		sum2 += int(s2[i])
 		i++
 	}
 	if sum1 == sum2 {
-		return s1Lenght < s2Lenght
+		return s1Len < s2Len
 	}
 	return sum1 < sum2
-}
-
-func main() {
-	PyramidSort(os.Stdin)
 }
