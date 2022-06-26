@@ -1,5 +1,33 @@
 package main
 
+/*
+--- ID посылки:
+69193344
+
+--- Принцип работы:
+На вход нам подаеся корень двоичного дерева и мы рекурсией начинам поиск по нему в поисках нужной ноды.
+Если текущая нода не подходит, и ее значение больше, чем данный нам ключ, то ищем в левом поддереве, если меньше - то в правом.
+В результате вернется измененная (или не измененная) левое или правое поддерево, в зависимости от того, в какое поддерево мы пошли.
+Если мы нашли нужную нам ноду, то у нас три варианта того что произойдет:
+- нужная нам нода оказалась листом. В данном случае мы просто возвращаем nil тем самым удаляя ноду
+- нужная нам нода имеет только одно поддерево. В данном случае мы просто возвращаем поддерево, тем самым удаляя ноду
+- нужная нам нода оказалась полноценным родителем. В данном случае я выбрал поиск наименьшего значения в правом поддереве
+Поиск наименьшего значения работает почти также как и основанная функция, за исключением того,
+что она идет только влево и возвращает нам значение удаленной ноды
+
+--- Временная сложность:
+Сложность всегда составляет O(h) где h - высота дерева:
+ - искомый ключ находится в листе, то нужно преодолеть h нод чтобы до него добраться.
+ - искомый ключ находится где-то в начале или середине то чтобы найти потребуется, конечно,
+меньше времени (O(1) если в начале, O(h / 2) если в середине) но чтобы найти наименьший элемент потребуется все оставшееся время.
+Но, если дерево сбалансированно, то удаление будет занимать O(log n)
+
+--- Пространственная сложность:
+В слаке писал по поводу рекурсий, не дождался ответа, но думаю уж сейчас должно быть верно
+Избавился от рекурсии в методе проверки, получается что рекурсия используется только в основном методе remove()
+O(1), тк мы дополнительно не создаем ничего, а используем то что есть.
+*/
+
 // Node структура узла
 // TODO закомментить перед отправкой (если компилятор Make)
 type Node struct {
@@ -14,43 +42,33 @@ func remove(node *Node, key int) *Node {
 		return node
 	}
 
-	if node.value == key {
-		if node.left == nil && node.right == nil {
-			return nil
-		}
-
-		if node.left == nil {
-			return node.right
-		}
-
-		if node.right == nil {
-			return node.left
-		}
-
-		node.value, node.right = findAndDeleteInTree(node.right)
-		return node
-	}
-
 	if node.value > key {
 		node.left = remove(node.left, key)
-	} else {
+
+	} else if node.value < key {
 		node.right = remove(node.right, key)
+
+	} else if node.value == key {
+		if node.left == nil && node.right == nil {
+			return nil
+		} else if node.left == nil && node.right != nil {
+			return node.right
+		} else if node.left != nil && node.right == nil {
+			return node.left
+		} else {
+			minNode := checkAndDeleteInTree(node.right)
+			node.value = minNode.value
+			node.right = remove(node.right, minNode.value)
+		}
 	}
 
 	return node
 }
 
-// findAndDeleteInTree
-// если есть и правое и левое поддерево, то ищем в правой самое маленькое значение
-// попутно удаляя его и ставя на место правого поддерева новое значение
-func findAndDeleteInTree(n *Node) (int, *Node) {
-	if n.left == nil {
-		if n.right == nil {
-			return n.value, nil
-		}
-		return n.value, n.left
+// checkAndDeleteInTree
+func checkAndDeleteInTree(root *Node) *Node {
+	for nil != root && root.left != nil {
+		root = root.left
 	}
-
-	n.value, n.left = findAndDeleteInTree(n.left)
-	return n.value, n
+	return root
 }
