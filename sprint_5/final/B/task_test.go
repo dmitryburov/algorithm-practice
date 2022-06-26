@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -18,17 +19,18 @@ func testTask1(t *testing.T) {
 	node6 := Node{10, &node5, nil}
 	node7 := Node{5, &node3, &node6}
 
-	newHead := remove(&node7, 10)
-
-	if newHead.value != 5 {
-		t.Errorf("\nnewHead.Value: expect 5 got %d", newHead.value)
-	}
-	if newHead.right != &node5 {
-		t.Errorf("\nnewHead.Right: expect %v got %v", &node5, newHead.right)
-	}
-	if newHead.right.value != 8 {
-		t.Errorf("\nnewHead.Right.Value: expect 8 got %d", newHead.right.value)
-	}
+	t.Run(fmt.Sprintf("Test 1"), func(t *testing.T) {
+		newHead := remove(&node7, 10)
+		if newHead.value != 5 {
+			t.Errorf("\nnewHead.Value: expect 5 got %d", newHead.value)
+		}
+		if newHead.right != &node5 {
+			t.Errorf("\nnewHead.Right: expect %v got %v", &node5, newHead.right)
+		}
+		if newHead.right.value != 8 {
+			t.Errorf("\nnewHead.Right.Value: expect 8 got %d", newHead.right.value)
+		}
+	})
 }
 
 func testTask2(t *testing.T) {
@@ -43,12 +45,15 @@ func testTask2(t *testing.T) {
 	node1_6 := Node{10, &node1_5, &node1_n3}
 	node1_7 := Node{5, &node1_3, &node1_6}
 
-	newHead := remove(&node1_7, 10)
+	t.Run(fmt.Sprintf("Test 2"), func(t *testing.T) {
+		newHead := remove(&node1_7, 10)
 
-	if newHead.value != 5 {
-		t.Errorf("\nnewHead.Value: expect 5 got %d", newHead.value)
-	}
-	if newHead.right.value != 11 {
-		t.Errorf("\nnewHead.Right.Value: expect 11 got %d", newHead.right.value)
-	}
+		if newHead.value != 5 {
+			t.Errorf("\nnewHead.Value: expect 5 got %d", newHead.value)
+		}
+		if newHead.right.value != 11 {
+			t.Errorf("\nnewHead.Right.Value: expect 11 got %d", newHead.right.value)
+		}
+	})
+
 }

@@ -1,27 +1,5 @@
 package main
 
-/*
---- ID посылки:
-69176446
-
---- Принцип работы:
-Благодаря занятиям и методам сортировок из предыдущих спринтов + достаточно хорошо описаная теория о просеивании, то можно сказать, что нужно было
-просто реализовать.
-
-Если кратко, то Append добавляет эелемент в очередь, не забывая чтобы в самом начале был самый приоритетный элемент,
-с помощью UpSifting
-После того, как все эелементы добавлены, забираются приоритетные элементы с помощью Next, который
-поддерживает, чтобы самый второй по приоритетности элемент оказался на вершине кучи с помощью DownSifting
-
-Методы дополнительно прокомментировал в коде.
-
---- Временная сложность:
-В целом временная сложность равна O(n * log n), но почему-то меня терзают сомнения, возможно не учел константу где-то?
-
---- Пространственная сложность:
-По факту иы имеем слайс очереди и несколько переменных, поэтому предполагаю что пространственная сложность = O9(n)
-*/
-
 import (
 	"bufio"
 	"fmt"
@@ -133,7 +111,7 @@ func (pq Queue) DownSifting(index int) {
 func (pq Queue) Less(a, b int) bool {
 	if pq.queue[a].complete == pq.queue[b].complete {
 		if pq.queue[a].fail == pq.queue[b].fail {
-			return comparator(pq.queue[a].name, pq.queue[b].name)
+			return pq.queue[a].name < pq.queue[b].name
 		} else {
 			return pq.queue[a].fail <= pq.queue[b].fail
 		}
@@ -150,26 +128,4 @@ func (pq Queue) Swap(a, b int) {
 // Len текущий размер очереди
 func (pq Queue) Len() int {
 	return len(pq.queue)
-}
-
-// comparator компоратор для сравнения
-func comparator(s1, s2 string) bool {
-	s1Len := len(s1)
-	s2Len := len(s2)
-	minLen := 0
-	if s1Len > s2Len {
-		minLen = s2Len
-	} else {
-		minLen = s1Len
-	}
-	i, sum1, sum2 := 0, 0, 0
-	for i < minLen && sum1 == sum2 {
-		sum1 += int(s1[i])
-		sum2 += int(s2[i])
-		i++
-	}
-	if sum1 == sum2 {
-		return s1Len < s2Len
-	}
-	return sum1 < sum2
 }
