@@ -2,7 +2,7 @@ package main
 
 /*
 --- ID посылки:
-69193344
+69215872
 
 --- Принцип работы:
 На вход нам подаеся корень двоичного дерева и мы рекурсией начинам поиск по нему в поисках нужной ноды.
@@ -23,9 +23,7 @@ package main
 Но, если дерево сбалансированно, то удаление будет занимать O(log n)
 
 --- Пространственная сложность:
-Поскольку мы работаем только со ссылками на узлы дерева, то выделяется О(1) пямяти для их хранения,
-которые необходимо удалить, а также на родителя удаляемого узла. Так как происходят рекурсивные вызовы, то для хранения вызовов в стеке
-потребуется О(H) памяти, где H - высота дерева.
+O(1), тк мы дополнительно не создаем ничего, а используем то что есть.
 */
 
 // Node структура узла
@@ -38,54 +36,68 @@ type Node struct {
 
 // remove удаление узла
 func remove(node *Node, key int) *Node {
+	// не знаю, по мне с рекурсией больше импонирует метод)
+	// конечно, на больших глубинах рекурсия может мне аукнется и станет дорогим удовольствием.
+	// реализовал на итерации, без рекурсии
 	if node == nil {
+		return nil
+	}
+
+	var currNode = node
+	var prevNode *Node
+
+	// присутствует ли ключ в BST
+	for currNode != nil && currNode.value != key {
+		prevNode = currNode
+		if currNode.value < key {
+			currNode = currNode.right
+		} else {
+			currNode = currNode.left
+		}
+	}
+	if currNode == nil {
 		return node
 	}
 
-	if node.value > key {
-		node.left = remove(node.left, key)
+	// если есть зотя бы один узел
+	if currNode.left == nil || currNode.right == nil {
+		var newNode *Node // новый узел
 
-	} else if node.value < key {
-		node.right = remove(node.right, key)
-
-	} else {
-		if node.left == nil {
-			return node.right
-		} else if node.right == nil {
-			return node.left
+		if currNode.left == nil {
+			newNode = currNode.right
+		} else {
+			newNode = currNode.left
 		}
 
-		// обходим циклом, исключая доп рекурсию
-		prev := node
-		newNode := node.right
-
-		for newNode.left != nil {
-			prev = newNode
-			newNode = newNode.left
-		}
-
-		if prev == node {
-			newNode.left = prev.left
+		if prevNode == nil {
 			return newNode
 		}
 
-		prev.left = nil
-		newNode.left = node.left
-		newNode.right = node.right
+		if currNode == prevNode.left {
+			prevNode.left = newNode
+		} else {
+			prevNode.right = newNode
+		}
 
-		return newNode
-		//minNode := checkAndDeleteInTree(node.right)
-		//node.value = minNode.value
-		//node.right = remove(node.right, minNode.value)
+		currNode = nil
+	} else {
+		var parent, tmp *Node
+
+		tmp = currNode.right
+		for tmp.left != nil {
+			parent = tmp
+			tmp = tmp.left
+		}
+
+		if parent != nil {
+			parent.left = tmp.right
+		} else {
+			currNode.right = tmp.right
+		}
+
+		currNode.value = tmp.value
+		tmp = nil
 	}
 
 	return node
 }
-
-// checkAndDeleteInTree
-//func checkAndDeleteInTree(root *Node) *Node {
-//	for nil != root && root.left != nil {
-//		root = root.left
-//	}
-//	return root
-//}
