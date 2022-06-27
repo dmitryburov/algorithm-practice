@@ -23,9 +23,9 @@ package main
 Но, если дерево сбалансированно, то удаление будет занимать O(log n)
 
 --- Пространственная сложность:
-В слаке писал по поводу рекурсий, не дождался ответа, но думаю уж сейчас должно быть верно
-Избавился от рекурсии в методе проверки, получается что рекурсия используется только в основном методе remove()
-O(1), тк мы дополнительно не создаем ничего, а используем то что есть.
+Поскольку мы работаем только со ссылками на узлы дерева, то выделяется О(1) пямяти для их хранения,
+которые необходимо удалить, а также на родителя удаляемого узла. Так как происходят рекурсивные вызовы, то для хранения вызовов в стеке
+потребуется О(H) памяти, где H - высота дерева.
 */
 
 // Node структура узла
@@ -48,27 +48,44 @@ func remove(node *Node, key int) *Node {
 	} else if node.value < key {
 		node.right = remove(node.right, key)
 
-	} else if node.value == key {
-		if node.left == nil && node.right == nil {
-			return nil
-		} else if node.left == nil && node.right != nil {
+	} else {
+		if node.left == nil {
 			return node.right
-		} else if node.left != nil && node.right == nil {
+		} else if node.right == nil {
 			return node.left
-		} else {
-			minNode := checkAndDeleteInTree(node.right)
-			node.value = minNode.value
-			node.right = remove(node.right, minNode.value)
 		}
+
+		// обходим циклом, исключая доп рекурсию
+		prev := node
+		newNode := node.right
+
+		for newNode.left != nil {
+			prev = newNode
+			newNode = newNode.left
+		}
+
+		if prev == node {
+			newNode.left = prev.left
+			return newNode
+		}
+
+		prev.left = nil
+		newNode.left = node.left
+		newNode.right = node.right
+
+		return newNode
+		//minNode := checkAndDeleteInTree(node.right)
+		//node.value = minNode.value
+		//node.right = remove(node.right, minNode.value)
 	}
 
 	return node
 }
 
 // checkAndDeleteInTree
-func checkAndDeleteInTree(root *Node) *Node {
-	for nil != root && root.left != nil {
-		root = root.left
-	}
-	return root
-}
+//func checkAndDeleteInTree(root *Node) *Node {
+//	for nil != root && root.left != nil {
+//		root = root.left
+//	}
+//	return root
+//}
