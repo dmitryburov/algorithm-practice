@@ -41,6 +41,8 @@ func generateTasks() []TestItem {
 `), "3"},
 		{strings.NewReader(`2 0
 `), "Oops! I did it again"},
+		{strings.NewReader(`1 0
+`), "0"},
 		{strings.NewReader(`10 20
 9 10 4
 2 2 4

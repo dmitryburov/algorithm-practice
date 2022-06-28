@@ -1,4 +1,4 @@
-# Задачи по алгоритмам Yandex Practicum
+# Yandex Practicum Algorithms
 
 ![IMG](docs/hero-image.jpg)
 
