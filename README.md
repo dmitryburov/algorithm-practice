@@ -4,8 +4,7 @@
 
 > ДИСКЛЕЙМЕР >>>
 > 
-> Автор не несет ответственности за точность, полноту или качество предоставленной информации.
-> 
+> Автор не несет ответственности за точность, полноту или качество предоставленной информации.<br>
 > Не рекомендуется использование решений из данного репозитория во время обучения - вы подрываете
 > собственные знания и развитие навыков программирования ;)
 
@@ -43,4 +42,88 @@
     
   - [x] [Ближайший ноль](sprint_1/final/A)
   - [x] [Ловкость рук](sprint_1/final/B)
+</details>
+
+### Спринт 2
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
+</details>
+
+### Спринт 3
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
+</details>
+
+### Спринт 4
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
+</details>
+
+### Спринт 5
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
+</details>
+
+### Спринт 6
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
+</details>
+
+### Спринт 7
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
+</details>
+
+### Спринт 8
+
+<details>
+  <summary>Задачи из Контеста</summary>
+
+</details>
+
+<details>
+  <summary>Финальные задачи</summary>
+
 </details>
