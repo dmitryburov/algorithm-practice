@@ -5,8 +5,6 @@ import (
 	"strings"
 )
 
-//J. Факторизация
-
 func main() {
 	var n int
 	fmt.Scan(&n)

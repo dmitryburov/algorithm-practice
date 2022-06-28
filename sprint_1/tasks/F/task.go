@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-// F. Палиндром
-
 func main() {
 	var inp = GetInputFromFile()
 	defer inp.Close()
