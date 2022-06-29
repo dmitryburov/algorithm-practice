@@ -127,3 +127,10 @@
   <summary>Финальные задачи</summary>
 
 </details>
+
+### Бонус!
+
+<details>
+  <summary>Задачачи с собеседований на разные темы</summary>
+
+</details>
