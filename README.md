@@ -127,7 +127,7 @@
 <details>
   <summary>Задачи из Контеста</summary>
 
-  - [ ] [A. Лампочки](sprint_5/tasks/A)
+  - [x] [A. Лампочки](sprint_5/tasks/A)
   - [ ] [B. Сбалансированное дерево](sprint_5/tasks/B)
   - [ ] [C. Дерево - анаграмма](sprint_5/tasks/C)
   - [ ] [D. Деревья - близнецы](sprint_5/tasks/D)
@@ -138,8 +138,8 @@
   - [ ] [I. Разные деревья поиска](sprint_5/tasks/I)
   - [ ] [J. Добавь узел](sprint_5/tasks/J)
   - [ ] [K. Выведи диапазон](sprint_5/tasks/K)
-  - [ ] [L. Просеивание вниз](sprint_5/tasks/L)
-  - [ ] [M. Просеивание вверх](sprint_5/tasks/M)
+  - [x] [L. Просеивание вниз](sprint_5/tasks/L)
+  - [x] [M. Просеивание вверх](sprint_5/tasks/M)
   - [ ] [N. Разбиение дерева](sprint_5/tasks/N)
 </details>
 
