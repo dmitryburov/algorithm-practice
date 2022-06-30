@@ -128,19 +128,19 @@
   <summary>Задачи из Контеста</summary>
 
   - [x] [A. Лампочки](sprint_5/tasks/A)
-  - [ ] [B. Сбалансированное дерево](sprint_5/tasks/B)
-  - [ ] [C. Дерево - анаграмма](sprint_5/tasks/C)
+  - [x] [B. Сбалансированное дерево](sprint_5/tasks/B)
+  - [x] [C. Дерево - анаграмма](sprint_5/tasks/C)
   - [ ] [D. Деревья - близнецы](sprint_5/tasks/D)
   - [ ] [E. Дерево поиска](sprint_5/tasks/E)
-  - [ ] [F. Максимальная глубина](sprint_5/tasks/F)
+  - [x] [F. Максимальная глубина](sprint_5/tasks/F)
   - [ ] [G. Максимальный путь в дереве](sprint_5/tasks/G)
   - [ ] [H. Числовые пути](sprint_5/tasks/H)
   - [ ] [I. Разные деревья поиска](sprint_5/tasks/I)
-  - [ ] [J. Добавь узел](sprint_5/tasks/J)
-  - [ ] [K. Выведи диапазон](sprint_5/tasks/K)
+  - [x] [J. Добавь узел](sprint_5/tasks/J)
+  - [x] [K. Выведи диапазон](sprint_5/tasks/K)
   - [x] [L. Просеивание вниз](sprint_5/tasks/L)
   - [x] [M. Просеивание вверх](sprint_5/tasks/M)
-  - [ ] [N. Разбиение дерева](sprint_5/tasks/N)
+  - [x] [N. Разбиение дерева](sprint_5/tasks/N)
 </details>
 
 <details>
