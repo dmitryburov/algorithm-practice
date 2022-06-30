@@ -15,7 +15,7 @@
 
 ## Структура задач по спринтам
 
-### Спринт 1 / Введение в алгоритмы
+### Спринт 1, Введение в алгоритмы
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -41,7 +41,7 @@
   - [x] [B. Ловкость рук](sprint_1/final/B)
 </details>
 
-### Спринт 2 / Основные структуры данных
+### Спринт 2, Основные структуры данных
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -67,7 +67,7 @@
   - [x] [B. Калькулятор](sprint_2/final/B)
 </details>
 
-### Спринт 3 / Рекурсия и сортировки
+### Спринт 3, Рекурсия и сортировки
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -96,7 +96,7 @@
   - [x] [B. Эффективная быстрая сортировка](sprint_3/final/B)
 </details>
 
-### Спринт 4 / Хеш-функции и хеш-таблицы
+### Спринт 4, Хеш-функции и хеш-таблицы
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -122,7 +122,7 @@
   - [x] [B. Хеш-таблица](sprint_4/final/B)
 </details>
 
-### Спринт 5 / Деревья
+### Спринт 5, Деревья
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -150,7 +150,7 @@
   - [x] [B. Удали узел](sprint_5/final/B)
 </details>
 
-### Спринт 6 / Графы
+### Спринт 6, Графы
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -164,7 +164,7 @@
   - [x] [B. Железные дороги](sprint_6/final/B)
 </details>
 
-### Спринт 7 / Жадные алгоритмы и динамическое программирование
+### Спринт 7, Жадные алгоритмы и динамическое программирование
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -176,7 +176,7 @@
 
 </details>
 
-### Спринт 8 / Алгоритмы на строках
+### Спринт 8, Алгоритмы на строках
 
 <details>
   <summary>Задачи из Контеста</summary>
@@ -188,25 +188,30 @@
 
 </details>
 
-### Бонус / Задачачи с собеседований
+### Дополнительно
 
-- [ ] [A. Card Counter](sprint_interview/A)
-- [ ] [B. Статус 200](sprint_interview/B)
-- [ ] [C. Matrix. Resurrection](sprint_interview/C)
-- [ ] [D. Римлянин](sprint_interview/D)
-- [ ] [E. Хорошие строки](sprint_interview/E)
-- [ ] [F. Пути в дереве](sprint_interview/F)
-- [ ] [G. Сизиф](sprint_interview/G)
-- [ ] [H. Частичный разворот](sprint_interview/H)
-- [ ] [I. Ферзи](sprint_interview/I)
-- [ ] [J. Разрыв шаблона](sprint_interview/J)
-- [ ] [K. Пересечение отрезков](sprint_interview/K)
-- [ ] [L. Массив юрского периода](sprint_interview/L)
-- [ ] [M. Атака клонов](sprint_interview/M)
-- [ ] [N. Монополия++](sprint_interview/N)
-- [ ] [O. Граница дерева](sprint_interview/O)
-- [ ] [P. Прямота](sprint_interview/P)
-- [ ] [Q. Паша и Марк](sprint_interview/Q)
-- [ ] [R. По ip вычислю](sprint_interview/R)
-- [ ] [S. XORошая задача](sprint_interview/S)
-- [ ] [T. Опять скобочные последовательности](sprint_interview/T)
+<details>
+  <summary>Задачачи с собеседований</summary>
+
+  - [ ] [A. Card Counter](sprint_interview/A)
+  - [ ] [B. Статус 200](sprint_interview/B)
+  - [ ] [C. Matrix. Resurrection](sprint_interview/C)
+  - [ ] [D. Римлянин](sprint_interview/D)
+  - [ ] [E. Хорошие строки](sprint_interview/E)
+  - [ ] [F. Пути в дереве](sprint_interview/F)
+  - [ ] [G. Сизиф](sprint_interview/G)
+  - [ ] [H. Частичный разворот](sprint_interview/H)
+  - [ ] [I. Ферзи](sprint_interview/I)
+  - [ ] [J. Разрыв шаблона](sprint_interview/J)
+  - [ ] [K. Пересечение отрезков](sprint_interview/K)
+  - [ ] [L. Массив юрского периода](sprint_interview/L)
+  - [ ] [M. Атака клонов](sprint_interview/M)
+  - [ ] [N. Монополия++](sprint_interview/N)
+  - [ ] [O. Граница дерева](sprint_interview/O)
+  - [ ] [P. Прямота](sprint_interview/P)
+  - [ ] [Q. Паша и Марк](sprint_interview/Q)
+  - [ ] [R. По ip вычислю](sprint_interview/R)
+  - [ ] [S. XORошая задача](sprint_interview/S)
+  - [ ] [T. Опять скобочные последовательности](sprint_interview/T)
+</details>
+
