@@ -107,14 +107,8 @@ func Solution(r io.Reader, s *strings.Builder) {
 			continue
 		}
 
-		list[v].edges = append(list[v].edges, Edge{
-			weight: w,
-			node:   list[u],
-		})
-		list[u].edges = append(list[u].edges, Edge{
-			weight: w,
-			node:   list[v],
-		})
+		list.Append(v, u, w)
+		list.Append(u, v, w)
 	}
 
 	// проверим наличие остовного дерева
@@ -123,6 +117,14 @@ func Solution(r io.Reader, s *strings.Builder) {
 	} else {
 		s.WriteString(ErrOops)
 	}
+}
+
+// Append добавление в матрицу
+func (n NodeList) Append(v, u, w int) {
+	n[v].edges = append(n[v].edges, Edge{
+		weight: w,
+		node:   n[u],
+	})
 }
 
 // Push добавление в очередь
