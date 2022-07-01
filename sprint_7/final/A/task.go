@@ -6,14 +6,13 @@ package main
 По сути, ответ там и был в псевдокоде, как его решать.
 
 --- Посылка
-69264786
+69267239
 
 --- Принцип работы
 В Го удобно получить строку в байтах и с байтами быстрее работать.
 Отсекая базовые случаи вначале собираем матрицу, а затем
 
 В алгоритме используется двумерная динамика.
-
 Дополнительные комментарии в коде.
 
 --- Временная сложность
@@ -67,7 +66,7 @@ func Solution(r io.Reader, w *strings.Builder) {
 		prev := i
 		for j := 1; j <= lenS; j++ {
 			if t[i-1] != s[j-1] {
-				matrix[j-1] = comparator(matrix[j]+1, comparator(matrix[j-1]+1, prev+1))
+				matrix[j-1] = getMinimum(matrix[j]+1, getMinimum(matrix[j-1]+1, prev+1))
 			}
 			matrix[j-1], prev = prev, matrix[j-1]
 		}
@@ -78,8 +77,8 @@ func Solution(r io.Reader, w *strings.Builder) {
 	w.WriteString(fmt.Sprint(matrix[lenS]))
 }
 
-// comparator сравнение минимального числа
-func comparator(a, b int) int {
+// getMinimum сравнение минимального числа
+func getMinimum(a, b int) int {
 	if a < b {
 		return a
 	}
