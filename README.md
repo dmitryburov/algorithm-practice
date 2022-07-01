@@ -186,7 +186,7 @@
 <details>
   <summary>Финальные задачи</summary>
 
-  - [ ] [A. Расстояние по Левенштейну](sprint_7/final/A)
+  - [x] [A. Расстояние по Левенштейну](sprint_7/final/A)
   - [ ] [B. Одинаковые суммы](sprint_7/final/B)
 </details>
 
