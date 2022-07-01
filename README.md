@@ -156,17 +156,17 @@
   <summary>Задачи из Контеста</summary>
 
   - [x] [A. Построить список смежности](sprint_6/tasks/A)
-  - [ ] [B. Перевести список ребер в матрицу смежности](sprint_6/tasks/A)
-  - [ ] [C. DFS](sprint_6/tasks/A)
-  - [ ] [D. BFS](sprint_6/tasks/A)
-  - [ ] [E. Компоненты связности](sprint_6/tasks/A)
-  - [ ] [F. Расстояние между вершинами](sprint_6/tasks/A)
-  - [ ] [G. Максимальное расстояние](sprint_6/tasks/A)
-  - [ ] [H. Время выходить](sprint_6/tasks/A)
-  - [ ] [J. Топологическая сортировка](sprint_6/tasks/A)
-  - [ ] [K. Достопримечательности](sprint_6/tasks/A)
-  - [ ] [L. Полный граф](sprint_6/tasks/A)
-  - [ ] [M. Проверка на двудольность](sprint_6/tasks/A)
+  - [ ] [B. Перевести список ребер в матрицу смежности](sprint_6/tasks/B)
+  - [ ] [C. DFS](sprint_6/tasks/C)
+  - [ ] [D. BFS](sprint_6/tasks/D)
+  - [ ] [E. Компоненты связности](sprint_6/tasks/E)
+  - [ ] [F. Расстояние между вершинами](sprint_6/tasks/F)
+  - [ ] [G. Максимальное расстояние](sprint_6/tasks/G)
+  - [ ] [H. Время выходить](sprint_6/tasks/H)
+  - [ ] [J. Топологическая сортировка](sprint_6/tasks/J)
+  - [ ] [K. Достопримечательности](sprint_6/tasks/K)
+  - [ ] [L. Полный граф](sprint_6/tasks/L)
+  - [ ] [M. Проверка на двудольность](sprint_6/tasks/M)
 </details>
 
 <details>
@@ -186,6 +186,8 @@
 <details>
   <summary>Финальные задачи</summary>
 
+  - [ ] [A. Расстояние по Левенштейну](sprint_7/final/A)
+  - [ ] [B. Одинаковые суммы](sprint_7/final/B)
 </details>
 
 ### Спринт 8, Алгоритмы на строках
