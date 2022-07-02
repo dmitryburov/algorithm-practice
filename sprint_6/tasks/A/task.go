@@ -89,6 +89,8 @@ func GetList(r io.Reader, s *strings.Builder) {
 			s.WriteString(strconv.Itoa(g.value) + " ")
 		}
 
-		s.WriteByte('\n')
+		if i != len(list)-1 {
+			s.WriteByte('\n')
+		}
 	}
 }
