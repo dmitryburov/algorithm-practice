@@ -19,7 +19,7 @@ func TestTask(t *testing.T) {
 		t.Run(fmt.Sprintf("Test %d", i+1), func(t *testing.T) {
 			buf := strings.Builder{}
 			Solution(v.input, &buf)
-			if strings.Compare(buf.String(), v.output) == 0 {
+			if strings.Compare(strings.TrimRight(buf.String(), "\n"), v.output) == 0 {
 				t.Errorf("Неверный ответ решения!\nОтвет: \n%v \nВерно: \n%v", buf.String(), v.output)
 			}
 		})
