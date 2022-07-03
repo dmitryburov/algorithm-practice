@@ -20,8 +20,8 @@ const (
 	_ Peak = iota
 	// WHITE не обработанная вершина
 	WHITE
-	// GREEN обнаруженная вершина
-	GREEN
+	// GRAY обнаруженная вершина
+	GRAY
 	// BLACK обработанная вершина
 	BLACK
 )
@@ -91,12 +91,12 @@ func (m Matrix) checkOptimal(visited []Peak, n int) bool {
 			current := stack[len(stack)-1]
 
 			if visited[current] == WHITE {
-				visited[current] = GREEN
+				visited[current] = GRAY
 
 				for _, target := range m[current] {
 					if visited[target] == WHITE {
 						stack = append(stack, target)
-					} else if visited[target] == GREEN {
+					} else if visited[target] == GRAY {
 						return false
 					}
 				}

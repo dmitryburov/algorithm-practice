@@ -156,16 +156,16 @@
   <summary>Задачи из Контеста</summary>
 
   - [x] [A. Построить список смежности](sprint_6/tasks/A)
-  - [ ] [B. Перевести список ребер в матрицу смежности](sprint_6/tasks/B)
-  - [ ] [C. DFS](sprint_6/tasks/C)
-  - [ ] [D. BFS](sprint_6/tasks/D)
+  - [x] [B. Перевести список ребер в матрицу смежности](sprint_6/tasks/B)
+  - [x] [C. DFS](sprint_6/tasks/C)
+  - [x] [D. BFS](sprint_6/tasks/D)
   - [ ] [E. Компоненты связности](sprint_6/tasks/E)
   - [ ] [F. Расстояние между вершинами](sprint_6/tasks/F)
   - [ ] [G. Максимальное расстояние](sprint_6/tasks/G)
   - [ ] [H. Время выходить](sprint_6/tasks/H)
-  - [ ] [J. Топологическая сортировка](sprint_6/tasks/J)
+  - [x] [J. Топологическая сортировка](sprint_6/tasks/J)
   - [ ] [K. Достопримечательности](sprint_6/tasks/K)
-  - [ ] [L. Полный граф](sprint_6/tasks/L)
+  - [x] [L. Полный граф](sprint_6/tasks/L)
   - [ ] [M. Проверка на двудольность](sprint_6/tasks/M)
 </details>
 
