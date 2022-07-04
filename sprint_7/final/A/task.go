@@ -6,7 +6,7 @@ package main
 По сути, ответ там и был в псевдокоде, как его решать.
 
 --- Посылка
-69267239
+69294852
 
 --- Принцип работы
 В Го удобно получить строку в байтах и с байтами быстрее работать.
@@ -51,8 +51,8 @@ func Solution(r io.Reader, w *strings.Builder) {
 
 	lenS, lenT := len(s), len(t)
 
-	// fix базовые случаи
-	if lenS == 0 || lenT == 0 || bytes.Compare(s, t) == 0 {
+	// fix базовый случай
+	if bytes.Equal(s, t) {
 		w.WriteString("0")
 		return
 	}
