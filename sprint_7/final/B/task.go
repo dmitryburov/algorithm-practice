@@ -1,24 +1,5 @@
 package main
 
-/*
---- Посылка
-69267329
-
---- Принцип работы
-Задача тоже показалась легкой) И чем-то схожа с предыдущей.
-Ищем последовательность(перебираем все пары), которая в сумме даст sum / 2, где sum - общая сумма всех очков.
-Если она нечетная - разбиение невозможно.
-
-Дополнительные комментарии в коде.
-
---- Временная сложность
-O(n * sum), где n - количество партий, sum - общая сумма
-
---- Пространственная сложность
-Хранится массив размерностью sum / 2
-O(sum / 2), где sum - общая сумма очков.
-
-*/
 import (
 	"bufio"
 	"fmt"
@@ -44,6 +25,7 @@ func main() {
 func Solution(r io.Reader, s *strings.Builder) {
 	var (
 		n       int
+		sum     int
 		err     error
 		scanner = bufio.NewScanner(r)
 	)
@@ -61,10 +43,11 @@ func Solution(r io.Reader, s *strings.Builder) {
 		arrString := strings.Split(scanner.Text(), " ")
 		for i := 0; i < len(arrString); i++ {
 			data[i], _ = strconv.Atoi(arrString[i])
+			sum += data[i]
 		}
 	}
 
-	if !CheckSum(n, data) {
+	if !CheckSum(n, sum, data) {
 		s.WriteString(FAIL)
 		return
 	}
@@ -73,8 +56,7 @@ func Solution(r io.Reader, s *strings.Builder) {
 }
 
 // CheckSum проверка суммы
-func CheckSum(n int, data []int) bool {
-	sum := GetSum(data)
+func CheckSum(n, sum int, data []int) bool {
 
 	// базовый случай
 	if sum%2 != 0 {
@@ -98,13 +80,4 @@ func CheckSum(n int, data []int) bool {
 	}
 
 	return dpPrev[sum/2] > 1
-}
-
-// GetSum суммирует значения очков
-func GetSum(arr []int) (sum int) {
-	for i := range arr {
-		sum += arr[i]
-	}
-
-	return
 }
