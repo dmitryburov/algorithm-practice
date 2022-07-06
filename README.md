@@ -166,7 +166,7 @@
   - [x] [J. Топологическая сортировка](sprint_6/tasks/J)
   - [ ] [K. Достопримечательности](sprint_6/tasks/K)
   - [x] [L. Полный граф](sprint_6/tasks/L)
-  - [ ] [M. Проверка на двудольность](sprint_6/tasks/M)
+  - [x] [M. Проверка на двудольность](sprint_6/tasks/M)
 </details>
 
 <details>
