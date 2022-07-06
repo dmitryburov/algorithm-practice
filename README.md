@@ -180,7 +180,22 @@
 
 <details>
   <summary>Задачи из Контеста</summary>
-
+    
+  - [ ] [A. Биржа](sprint_7/tasks/A)
+  - [ ] [B. Расписание](sprint_7/tasks/B)
+  - [ ] [C. Золотая лихорадка](sprint_7/tasks/C)
+  - [ ] [D. Числа Фибоначчи для взрослых](sprint_7/tasks/D)
+  - [ ] [E. Алла на Алгосах](sprint_7/tasks/E)
+  - [ ] [F. Прыжки по лестнице](sprint_7/tasks/F)
+  - [ ] [G. Банкомат](sprint_7/tasks/G)
+  - [ ] [H. Поле с цветочками](sprint_7/tasks/H)
+  - [ ] [I. Сложное поле с цветочками](sprint_7/tasks/I)
+  - [ ] [J. Путешествие](sprint_7/tasks/J)
+  - [ ] [K. Гороскопы](sprint_7/tasks/K)
+  - [ ] [L. Золото лепреконов](sprint_7/tasks/L)
+  - [ ] [M. Рюкзак](sprint_7/tasks/M)
+  - [ ] [N. Гоша в ресторане](sprint_7/tasks/N)
+  - [ ] [O. Количество путей](sprint_7/tasks/O)
 </details>
 
 <details>
