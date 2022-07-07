@@ -181,10 +181,10 @@
 <details>
   <summary>Задачи из Контеста</summary>
     
-  - [ ] [A. Биржа](sprint_7/tasks/A)
+  - [x] [A. Биржа](sprint_7/tasks/A)
   - [ ] [B. Расписание](sprint_7/tasks/B)
   - [ ] [C. Золотая лихорадка](sprint_7/tasks/C)
-  - [ ] [D. Числа Фибоначчи для взрослых](sprint_7/tasks/D)
+  - [x] [D. Числа Фибоначчи для взрослых](sprint_7/tasks/D)
   - [ ] [E. Алла на Алгосах](sprint_7/tasks/E)
   - [ ] [F. Прыжки по лестнице](sprint_7/tasks/F)
   - [ ] [G. Банкомат](sprint_7/tasks/G)
