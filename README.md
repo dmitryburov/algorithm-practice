@@ -210,11 +210,25 @@
 <details>
   <summary>Задачи из Контеста</summary>
 
+  - [ ] [A. Разворот строки](sprint_8/tasks/A)
+  - [ ] [B. Пограничный контроль](sprint_8/tasks/B)
+  - [ ] [C. Самый длинный палиндром 2](sprint_8/tasks/C)
+  - [ ] [D. Общий префикс](sprint_8/tasks/D)
+  - [ ] [E. Вставка строк](sprint_8/tasks/E)
+  - [ ] [F. Частое слово](sprint_8/tasks/F)
+  - [ ] [G. Поиск со сдвигом](sprint_8/tasks/G)
+  - [ ] [H. Глобальная замена](sprint_8/tasks/H)
+  - [ ] [I. Повтор](sprint_8/tasks/I)
+  - [ ] [J. Случай верблюда](sprint_8/tasks/J)
+  - [ ] [K. Сравнить две строки](sprint_8/tasks/K)
+  - [ ] [L. Подсчёт префикс-функции](sprint_8/tasks/L)
 </details>
 
 <details>
   <summary>Финальные задачи</summary>
 
+  - [ ] [A. Packed Prefix](sprint_8/final/A)
+  - [ ] [B. Шпаргалка](sprint_8/final/B)
 </details>
 
 ### Дополнительно
