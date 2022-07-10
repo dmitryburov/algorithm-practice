@@ -227,8 +227,8 @@
 <details>
   <summary>Финальные задачи</summary>
 
-  - [ ] [A. Packed Prefix](sprint_8/final/A)
-  - [ ] [B. Шпаргалка](sprint_8/final/B)
+  - [x] [A. Packed Prefix](sprint_8/final/A)
+  - [x] [B. Шпаргалка](sprint_8/final/B)
 </details>
 
 ### Дополнительно
