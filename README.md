@@ -216,12 +216,12 @@
   - [x] [D. Общий префикс](sprint_8/tasks/D)
   - [ ] [E. Вставка строк](sprint_8/tasks/E)
   - [x] [F. Частое слово](sprint_8/tasks/F)
-  - [ ] [G. Поиск со сдвигом](sprint_8/tasks/G)
+  - [x] [G. Поиск со сдвигом](sprint_8/tasks/G)
   - [x] [H. Глобальная замена](sprint_8/tasks/H)
-  - [ ] [I. Повтор](sprint_8/tasks/I)
+  - [x] [I. Повтор](sprint_8/tasks/I)
   - [ ] [J. Случай верблюда](sprint_8/tasks/J)
-  - [ ] [K. Сравнить две строки](sprint_8/tasks/K)
-  - [ ] [L. Подсчёт префикс-функции](sprint_8/tasks/L)
+  - [x] [K. Сравнить две строки](sprint_8/tasks/K)
+  - [x] [L. Подсчёт префикс-функции](sprint_8/tasks/L)
 </details>
 
 <details>
