@@ -34,6 +34,13 @@ import (
 	"unicode"
 )
 
+type Stack []string
+
+const (
+	BRACKET_LEFT  = "["
+	BRACKET_RIGHT = "]"
+)
+
 func main() {
 	s := strings.Builder{}
 	Solution(os.Stdin, &s)
@@ -55,125 +62,89 @@ func Solution(r io.Reader, s *strings.Builder) {
 		log.Fatal(err)
 	}
 
-	prefix := ""
-	current := ""
+	lines := make([]string, n)
 
+	// распаковываем строки
 	for i := 0; i < n; i++ {
 		scanner.Scan()
-		if i == 0 {
-			prefix = unpack(scanner.Text())
-			continue
-		}
-		current = lengthUnpack(scanner.Text(), len(prefix), 0)
-		prefix = current[:firstIndex(prefix, current)]
+		lines[i] = unpack(scanner.Bytes())
 	}
 
-	s.WriteString(prefix)
+	s.WriteString(searchPrefix(n, lines))
 }
 
 // unpack распаковка строки
-func unpack(s string) string {
-	builder := strings.Builder{}
+// убрал рекурсию и переделал на стек
+func unpack(line []byte) string {
+	var stack Stack
+	var ch, top, curr string
 
-	for i := 0; i < len(s); {
-		if unicode.IsDigit(rune(s[i])) {
-			howMuch, _ := strconv.Atoi(string(s[i]))
-			i += 2
-			end := searchEnd(s, i)
-			unpackedS := unpack(s[i:end])
+	for i := 0; i < len(line); i++ {
+		ch = string(line[i])
 
-			for g := 0; g < howMuch; g++ {
-				builder.WriteString(unpackedS)
+		switch ch {
+		case BRACKET_RIGHT:
+			top = stack.Pop()
+			curr = ""
+
+			for !unicode.IsDigit(rune(top[0])) {
+				curr = top + curr
+				top = stack.Pop()
 			}
-			i = end + 1
 
-		} else {
-			builder.WriteByte(s[i])
-			i++
+			if num, err := strconv.Atoi(top); err == nil {
+				stack.Push(strings.Repeat(curr, num))
+			}
+		case BRACKET_LEFT:
+			continue
+		default:
+			stack.Push(ch)
 		}
 	}
 
-	return builder.String()
+	result := ""
+	for len(stack) > 0 {
+		result = stack.Pop() + result
+	}
+
+	return result
 }
 
-// firstIndex поиск первого неравного индекса
-func firstIndex(a, b string) int {
-	var max int
+// searchPrefix поиск префикса
+func searchPrefix(n int, lines []string) string {
+	tmp := lines[0]
 
-	if len(a) > len(b) {
-		max = len(a)
+	for i := 0; i < len(tmp); i++ {
+		ch := tmp[i]
+		for j := 1; j < n; j++ {
+			line := lines[j]
+			if i > len(line) || line[i] != ch {
+				return tmp[:i]
+			}
+		}
+	}
+
+	return tmp
+}
+
+// IsEmpty пустой стек
+func (s *Stack) IsEmpty() bool {
+	return len(*s) == 0
+}
+
+// Push добавление в стек
+func (s *Stack) Push(str string) {
+	*s = append(*s, str)
+}
+
+// Pop последний элемент из стека
+func (s *Stack) Pop() string {
+	if s.IsEmpty() {
+		return ""
 	} else {
-		max = len(b)
+		index := len(*s) - 1
+		element := (*s)[index]
+		*s = (*s)[:index]
+		return element
 	}
-
-	var i int
-	for ; i < max; i++ {
-		if i >= len(a) || i >= len(b) || a[i] != b[i] {
-			break
-		}
-	}
-
-	return i
-}
-
-// lengthUnpack
-func lengthUnpack(s string, needLen int, currLen int) string {
-	builder := strings.Builder{}
-	var length int
-
-	for i := 0; i < len(s); {
-		length = builder.Len() + currLen
-		if length >= needLen {
-			return cutString(builder.String(), length-needLen)
-		}
-
-		if unicode.IsDigit(rune(s[i])) {
-			howMuch, _ := strconv.Atoi(string(s[i]))
-			i += 2
-			end := searchEnd(s, i)
-			unpackedS := lengthUnpack(s[i:end], needLen, builder.Len()+currLen)
-
-			for g := 0; g < howMuch; g++ {
-				length = builder.Len() + currLen
-				if length >= needLen {
-					return cutString(builder.String(), length-needLen)
-				}
-
-				builder.WriteString(unpackedS)
-			}
-
-			i = end + 1
-			continue
-		}
-
-		builder.WriteByte(s[i])
-		i++
-	}
-
-	return builder.String()
-}
-
-// cutString обрезка строки
-func cutString(s string, to int) string {
-	return s[:len(s)-to]
-}
-
-// searchEnd конец запакованной строки
-func searchEnd(s string, start int) int {
-	bracketCount := 1
-	i := start
-
-	for ; i < len(s); i++ {
-		if s[i] == '[' {
-			bracketCount++
-			continue
-		} else if s[i] == ']' {
-			bracketCount--
-			if bracketCount == 0 {
-				break
-			}
-		}
-	}
-
-	return i
 }
