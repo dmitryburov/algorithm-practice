@@ -37,8 +37,8 @@ import (
 type Stack []string
 
 const (
-	BRACKET_LEFT  = "["
-	BRACKET_RIGHT = "]"
+	BRACKET_OPEN  = "["
+	BRACKET_CLOSE = "]"
 )
 
 func main() {
@@ -64,26 +64,28 @@ func Solution(r io.Reader, s *strings.Builder) {
 
 	lines := make([]string, n)
 
-	// распаковываем строки
 	for i := 0; i < n; i++ {
 		scanner.Scan()
 		lines[i] = unpack(scanner.Bytes())
 	}
 
-	s.WriteString(searchPrefix(n, lines))
+	s.WriteString(searchPrefix(lines))
 }
 
 // unpack распаковка строки
 // убрал рекурсию и переделал на стек
 func unpack(line []byte) string {
 	var stack Stack
-	var ch, top, curr string
+	var top, curr string
 
 	for i := 0; i < len(line); i++ {
-		ch = string(line[i])
+		// fix если пусто
+		if unicode.IsSpace(rune(line[i])) {
+			continue
+		}
 
-		switch ch {
-		case BRACKET_RIGHT:
+		switch string(line[i]) {
+		case BRACKET_CLOSE:
 			top = stack.Pop()
 			curr = ""
 
@@ -92,13 +94,15 @@ func unpack(line []byte) string {
 				top = stack.Pop()
 			}
 
-			if num, err := strconv.Atoi(top); err == nil {
+			if num, err := strconv.Atoi(top); err != nil {
+				log.Fatal(err)
+			} else {
 				stack.Push(strings.Repeat(curr, num))
 			}
-		case BRACKET_LEFT:
+		case BRACKET_OPEN:
 			continue
 		default:
-			stack.Push(ch)
+			stack.Push(string(line[i]))
 		}
 	}
 
@@ -111,13 +115,16 @@ func unpack(line []byte) string {
 }
 
 // searchPrefix поиск префикса
-func searchPrefix(n int, lines []string) string {
+func searchPrefix(lines []string) string {
 	tmp := lines[0]
 
+	var ch byte
+	var line string
+
 	for i := 0; i < len(tmp); i++ {
-		ch := tmp[i]
-		for j := 1; j < n; j++ {
-			line := lines[j]
+		ch = tmp[i]
+		for j := 0; j < len(lines); j++ {
+			line = lines[j]
 			if i > len(line) || line[i] != ch {
 				return tmp[:i]
 			}
