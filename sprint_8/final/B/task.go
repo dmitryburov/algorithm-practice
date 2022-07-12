@@ -2,7 +2,7 @@ package main
 
 /*
 --- Посылка
-69358298
+69374055
 
 --- Принцип работы
 Алгоритм решается с помощью структура Бора и динамического программирования.
@@ -25,7 +25,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"strconv"
@@ -49,15 +48,16 @@ type DP [][]*Node
 
 func main() {
 	s := strings.Builder{}
-	Solution(os.Stdin, &s)
 
+	// вынес инициализацию input-данных
+	t, root := initInput(bufio.NewScanner(os.Stdin))
+
+	Solution(t, root, &s)
 	fmt.Println(s.String())
 }
 
 // Solution решение задачи
-func Solution(r io.Reader, s *strings.Builder) {
-
-	t, rootNode := initInput(bufio.NewScanner(r))
+func Solution(t string, rootNode *Node, s *strings.Builder) {
 
 	if rootNode.tree[string(t[0])] == nil {
 		s.WriteString(FAIL)
