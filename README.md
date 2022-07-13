@@ -234,7 +234,13 @@
 ### Дополнительно
 
 <details>
-  <summary>Задачачи с собеседований</summary>
+  <summary>Задачи для подготовки к собеседованию</summary>
+
+- [ ] [A. Card Counter](sprint_train/A)
+</details>
+
+<details>
+  <summary>Задачи с реальных собеседований</summary>
 
   - [ ] [A. Card Counter](sprint_interview/A)
   - [ ] [B. Статус 200](sprint_interview/B)
@@ -257,4 +263,3 @@
   - [ ] [S. XORошая задача](sprint_interview/S)
   - [ ] [T. Опять скобочные последовательности](sprint_interview/T)
 </details>
-
