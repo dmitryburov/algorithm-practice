@@ -1,4 +1,4 @@
-# Yandex Practicum Algorithms
+# Я.Практикум - алгоритмы и структуры данных
 
 ![IMG](docs/hero-image.jpg)
 
