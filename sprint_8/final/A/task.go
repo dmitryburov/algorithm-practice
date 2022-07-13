@@ -1,30 +1,8 @@
 package main
 
-/*
---- Посылка
-69359828
-
---- Принцип работы
-Первая строка распаковывается как обычно, а последующие распаковываю до наибольшего возможного префикса.
-Например, если при распаковке первой строки ее длина оказалась равна 6, а длинна второй оказалась, 500,
-то нет никакого смысла распаковывать все 500 символов.
-
-Распаковка идет в 2 этапа: сначала ищем начало запакованной строки с помощью проверки руны на число,
-потом мы находим конец запакованной строки, и отправляем запакованную строку в следующий шаг рекурсии.
-
-Дополнительные комментарии в коде.
-
---- Временная сложность
-У нас есть все строки в количестве n, и в ней есть минимальная строка длинны m, которая является общим префиксом для всех строк,
-то мы имеем на каждом шаге распаковку длинны m и сравнение со старым префиксом тоже длинны m.
-Итого O(n * (m + m))
-
---- Пространственная сложность
-Мы имеем текущий общий префикс длинны m и новую строку для проверки длинны m - O(m + m)
-
-*/
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"log"
@@ -34,11 +12,11 @@ import (
 	"unicode"
 )
 
-type Stack []string
+type Stack [][]byte
 
 const (
-	BRACKET_OPEN  = "["
-	BRACKET_CLOSE = "]"
+	BRACKET_OPEN  = byte('[')
+	BRACKET_CLOSE = byte(']')
 )
 
 func main() {
@@ -62,76 +40,81 @@ func Solution(r io.Reader, s *strings.Builder) {
 		log.Fatal(err)
 	}
 
-	lines := make([]string, n)
+	var prefix, current string
 
 	for i := 0; i < n; i++ {
 		scanner.Scan()
-		lines[i] = unpack(scanner.Bytes())
-	}
-
-	s.WriteString(searchPrefix(lines))
-}
-
-// unpack распаковка строки
-// убрал рекурсию и переделал на стек
-func unpack(line []byte) string {
-	var stack Stack
-	var top, curr string
-
-	for i := 0; i < len(line); i++ {
-		// fix если пусто
-		if unicode.IsSpace(rune(line[i])) {
+		if i == 0 {
+			prefix = unpack(scanner.Bytes())
 			continue
 		}
 
-		switch string(line[i]) {
+		current = unpack(scanner.Bytes())
+		prefix = current[:findIndex(prefix, current)]
+	}
+
+	s.WriteString(prefix)
+}
+
+// unpack распаковка строки
+func unpack(s []byte) string {
+	var stack Stack
+	var builder strings.Builder
+	var top, curr []byte
+
+	for i := 0; i < len(s); i++ {
+		// fix
+		if unicode.IsSpace(rune(s[i])) {
+			continue
+		}
+
+		switch s[i] {
 		case BRACKET_CLOSE:
 			top = stack.Pop()
-			curr = ""
+			curr = nil
 
 			for !unicode.IsDigit(rune(top[0])) {
-				curr = top + curr
+				curr = append(top, curr...)
 				top = stack.Pop()
 			}
 
-			if num, err := strconv.Atoi(top); err != nil {
+			if num, err := strconv.Atoi(string(top)); err != nil {
 				log.Fatal(err)
 			} else {
-				stack.Push(strings.Repeat(curr, num))
+				stack.Push(bytes.Repeat(curr, num))
 			}
 		case BRACKET_OPEN:
 			continue
 		default:
-			stack.Push(string(line[i]))
+			stack.Push([]byte(string(s[i])))
 		}
 	}
 
-	result := ""
-	for len(stack) > 0 {
-		result = stack.Pop() + result
+	for i := 0; i < len(stack); i++ {
+		builder.Write(stack[i])
 	}
 
-	return result
+	return builder.String()
 }
 
-// searchPrefix поиск префикса
-func searchPrefix(lines []string) string {
-	tmp := lines[0]
+// findIndex поиск первого неравного индекса
+func findIndex(a, b string) int {
+	var max int
 
-	var ch byte
-	var line string
+	if len(a) > len(b) {
+		max = len(a)
+	} else {
+		max = len(b)
+	}
 
-	for i := 0; i < len(tmp); i++ {
-		ch = tmp[i]
-		for j := 0; j < len(lines); j++ {
-			line = lines[j]
-			if i > len(line) || line[i] != ch {
-				return tmp[:i]
-			}
+	var i int
+	for ; i < max; i++ {
+		if i >= len(a) || i >= len(b) || a[i] != b[i] {
+			break
 		}
 	}
 
-	return tmp
+	return i
 }
 
 // IsEmpty пустой стек
@@ -140,14 +123,14 @@ func (s *Stack) IsEmpty() bool {
 }
 
 // Push добавление в стек
-func (s *Stack) Push(str string) {
+func (s *Stack) Push(str []byte) {
 	*s = append(*s, str)
 }
 
 // Pop последний элемент из стека
-func (s *Stack) Pop() string {
+func (s *Stack) Pop() []byte {
 	if s.IsEmpty() {
-		return ""
+		return nil
 	} else {
 		index := len(*s) - 1
 		element := (*s)[index]
