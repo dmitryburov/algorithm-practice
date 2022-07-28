@@ -234,7 +234,7 @@
 <details>
   <summary>Задачи для подготовки к собеседованию</summary>
 
-- [ ] [A. Card Counter](sprint_train/A)
+- [ ] [A. A+B](sprint_train/A)
 </details>
 
 <details>
