@@ -234,30 +234,25 @@
 <details>
   <summary>Задачи для подготовки к собеседованию</summary>
 
-- [ ] [A. A+B](sprint_train/A)
-</details>
-
-<details>
-  <summary>Задачи с реальных собеседований</summary>
-
-  - [ ] [A. Card Counter](sprint_interview/A)
-  - [ ] [B. Статус 200](sprint_interview/B)
-  - [ ] [C. Matrix. Resurrection](sprint_interview/C)
-  - [ ] [D. Римлянин](sprint_interview/D)
-  - [ ] [E. Хорошие строки](sprint_interview/E)
-  - [ ] [F. Пути в дереве](sprint_interview/F)
-  - [ ] [G. Сизиф](sprint_interview/G)
-  - [ ] [H. Частичный разворот](sprint_interview/H)
-  - [ ] [I. Ферзи](sprint_interview/I)
-  - [ ] [J. Разрыв шаблона](sprint_interview/J)
-  - [ ] [K. Пересечение отрезков](sprint_interview/K)
-  - [ ] [L. Массив юрского периода](sprint_interview/L)
-  - [ ] [M. Атака клонов](sprint_interview/M)
-  - [ ] [N. Монополия++](sprint_interview/N)
-  - [ ] [O. Граница дерева](sprint_interview/O)
-  - [ ] [P. Прямота](sprint_interview/P)
-  - [ ] [Q. Паша и Марк](sprint_interview/Q)
-  - [ ] [R. По ip вычислю](sprint_interview/R)
-  - [ ] [S. XORошая задача](sprint_interview/S)
-  - [ ] [T. Опять скобочные последовательности](sprint_interview/T)
+  - [X] [A. A+B](sprint_interview/A)
+  - [ ] [B. Card Counter](sprint_interview/B)
+  - [ ] [C. Статус 200](sprint_interview/C)
+  - [ ] [D. Matrix. Resurrection](sprint_interview/D)
+  - [ ] [E. Римлянин](sprint_interview/E)
+  - [ ] [F. Хорошие строки](sprint_interview/F)
+  - [ ] [G. Пути в дереве](sprint_interview/G)
+  - [ ] [H. Сизиф](sprint_interview/H)
+  - [ ] [I. Частичный разворот](sprint_interview/I)
+  - [ ] [J. Ферзи](sprint_interview/J)
+  - [ ] [K. Разрыв шаблона](sprint_interview/K)
+  - [ ] [L. Пересечение отрезков](sprint_interview/L)
+  - [ ] [M. Массив юрского периода](sprint_interview/M)
+  - [ ] [N. Атака клонов](sprint_interview/N)
+  - [ ] [O. Монополия++](sprint_interview/O)
+  - [ ] [P. Граница дерева](sprint_interview/P)
+  - [ ] [Q. Прямота](sprint_interview/Q)
+  - [ ] [R. Паша и Марк](sprint_interview/R)
+  - [ ] [S. По ip вычислю](sprint_interview/S)
+  - [ ] [T. XORошая задача](sprint_interview/T)
+  - [ ] [U. Опять скобочные последовательности](sprint_interview/U)
 </details>
