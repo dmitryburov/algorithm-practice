@@ -256,3 +256,8 @@
   - [ ] [T. XORошая задача](sprint_interview/T)
   - [ ] [U. Опять скобочные последовательности](sprint_interview/U)
 </details>
+
+<details>
+  <summary>Задачи с Leetcode</summary>
+  
+</details>
