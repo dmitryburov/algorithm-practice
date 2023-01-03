@@ -13,6 +13,8 @@
 
 По мере прохождения обучения (и после) решения будут пополняться.
 
+В дальнейшем, задачи будут пополняться из [LeetCode](https://leetcode.com).
+
 ### Спринт 1. Введение в алгоритмы
 
 <details>
@@ -259,5 +261,7 @@
 
 <details>
   <summary>Задачи с Leetcode</summary>
-  
+
+  - [X] [1. Two Sum](sprint_leetcode/1)
+  - [X] [19. Remove Nth Node From End of List](sprint_leetcode/19)
 </details>
