@@ -20,6 +20,7 @@
 - [Тестирование](#tests)
 - [Я.Практикум](#yandex)
 - [Задачи LeetCode](#leetcode)
+- [Задачи CodeWars](#codewars)
 
 <br>
 
@@ -293,5 +294,10 @@
 - [X] [155. Min Stack](sprint_leetcode/155)
 - [X] [328. Odd Even Linked List](sprint_leetcode/328)
 - [X] [347. Top K Frequent Elements](sprint_leetcode/347)
+
+<br>
+
+<a name="leetcode"></a>
+## CodeWars
 
 <br>
