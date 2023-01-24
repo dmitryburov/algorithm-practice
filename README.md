@@ -263,6 +263,7 @@
   <summary>Задачи с Leetcode</summary>
 
   - [X] [1. Two Sum](sprint_leetcode/1)
+  - [X] [15. 3Sum](sprint_leetcode/15)
   - [X] [19. Remove Nth Node From End of List](sprint_leetcode/19)
   - [X] [33. Search in Rotated Sorted Array](sprint_leetcode/33)
   - [X] [56. Merge Intervals](sprint_leetcode/56)
