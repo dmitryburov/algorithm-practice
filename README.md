@@ -267,6 +267,7 @@
   - [X] [19. Remove Nth Node From End of List](sprint_leetcode/19)
   - [X] [33. Search in Rotated Sorted Array](sprint_leetcode/33)
   - [X] [56. Merge Intervals](sprint_leetcode/56)
+  - [X] [66. Plus One](sprint_leetcode/66)
   - [X] [155. Min Stack](sprint_leetcode/155)
   - [X] [328. Odd Even Linked List](sprint_leetcode/328)
   - [X] [347. Top K Frequent Elements](sprint_leetcode/347)
