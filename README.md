@@ -20,12 +20,11 @@
 - [Тестирование](#tests)
 - [Я.Практикум](#yandex)
 - [Задачи LeetCode](#leetcode)
-- [Задачи CodeWars](#codewars)
 
 <br>
 
 <a name="tests"></a>
-## Тесты
+## Тестирование
 
 Каждое решение обложено простыми тестами (при желении их можно расширить).
 
@@ -294,10 +293,5 @@
 - [X] [155. Min Stack](leetcode/155)
 - [X] [328. Odd Even Linked List](leetcode/328)
 - [X] [347. Top K Frequent Elements](leetcode/347)
-
-<br>
-
-<a name="leetcode"></a>
-## CodeWars
 
 <br>
