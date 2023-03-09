@@ -9,22 +9,24 @@
 > собственные знания и развитие навыков программирования ;)
 
 В этом репозитории я буду собирать задачи (из Контеста) по спринтам и финальные задания спринтов,
-в рамках обучения по курсу [Алгоритмы и структуры данных](https://practicum.yandex.ru/referrals/?ref_code=gAAAAABjvxRSCBXMX49DWk6vDE1H8uJiPrvbZOXxu8VzPsONMUvQWU_lp30u_2fD8axNY5dImH9HzRkZ7eC1z8kc6upg1lDtmA%3D%3D) от Я.Практикума.
+в рамках обучения по курсу [Алгоритмы и структуры данных](https://practicum.yandex.ru/algorithms/) от [Я.Практикума](https://practicum.yandex.ru).
 
 По мере прохождения обучения (и после) решения будут пополняться.
-В дальнейшем, задачи будут пополняться из [LeetCode](https://leetcode.com), [CodeWars](https://www.codewars.com) и др.
+В дальнейшем, задачи будут пополняться из [LeetCode](https://leetcode.com), [Яндекс Тренировки](https://yandex.ru/yaintern/algorithm-training_1), [CodeWars](https://www.codewars.com) и др.
 
 
 ### Быстрый переход к разделу
 
 - [Тестирование](#tests)
-- [Я.Практикум](#yandex)
-- [Задачи LeetCode](#leetcode)
+- [Яндекс](#yandex)
+- [Тинькофф](#tinkoff)
+- [LeetCode](#leetcode)
+
 
 <br>
 
-<a name="tests"></a>
 ## Тестирование
+<a name="tests"></a>
 
 Каждое решение обложено простыми тестами (при желении их можно расширить).
 
@@ -32,8 +34,8 @@
 
 <br>
 
+## Яндекс Практикум, курс Алгоритмы и структуры данных
 <a name="yandex"></a>
-## Я.Практикум, курс Алгоритмы и структуры данных
 
 #### Спринт 1. Введение в алгоритмы
 
@@ -281,8 +283,75 @@
 
 <br>
 
-<a name="leetcode"></a>
+## Tinkoff, курс Алгоритмы и структуры данных
+<a name="tinkoff"></a>
+
+<details>
+  <summary>Линейные структуры, сортировки</summary>
+
+- [ ] [A. Анаграммы](tinkoff/1/A)
+- [ ] [Простая очередь](tinkoff/1/2)
+- [ ] [Постфиксная запись](tinkoff/1/3)
+- [ ] [Кошмар в замке](tinkoff/1/4)
+- [ ] [Гоблины и очереди](tinkoff/1/5)
+- [ ] [Число](tinkoff/1/6)
+</details>
+<br>
+<details>
+  <summary>Оптимальные сортировки и поиски за логарифм</summary>
+
+- [ ] [Count me in](tinkoff/2/1)
+- [ ] [Инверсии](tinkoff/2/2)
+- [ ] [Минимизируем максимум](tinkoff/2/3)
+- [ ] [Дремучий лес](tinkoff/2/4)
+</details>
+<br>
+<details>
+  <summary>Динамическое программирование</summary>
+
+- [ ] [Калькулятор](tinkoff/3/1)
+- [ ] [Конём ходи!](tinkoff/3/2)
+- [ ] [Наибольший квадрат](tinkoff/3/3)
+- [ ] [Гвоздики](tinkoff/3/4)
+- [ ] [Лесенки](tinkoff/3/5)
+</details>
+<br>
+<details>
+  <summary>Графы, DFS</summary>
+
+- [ ] [Дерево?](tinkoff/4/1)
+- [ ] [Компоненты связности](tinkoff/4/2)
+- [ ] [Удаление клеток](tinkoff/4/3)
+- [ ] [Получи дерево](tinkoff/4/4)
+- [ ] [Долой списывани!](tinkoff/4/5)
+- [ ] [Есть ли цикл?](tinkoff/4/6)
+- [ ] [Свинки-копилки](tinkoff/4/7)
+- [ ] [Topsort](tinkoff/4/8)
+- [ ] [Предок](tinkoff/4/9)
+</details>
+<br>
+<details>
+  <summary>BFS, Дейкстра</summary>
+
+- [ ] [Наименьшее кратное](tinkoff/5/1)
+- [ ] [Дейкстра](tinkoff/5/2)
+- [ ] [Автобусы](tinkoff/5/3)
+- [ ] [Числа](tinkoff/5/4)
+</details>
+<br>
+<details>
+  <summary>Строки</summary>
+
+- [ ] [Функция от строчки](tinkoff/6/1)
+- [ ] [Период строки](tinkoff/6/2)
+- [ ] [Подпалиндромы](tinkoff/6/3)
+- [ ] [Поиск подстроки](tinkoff/6/4)
+</details>
+
+<br>
+
 ## LeetCode
+<a name="leetcode"></a>
 
 - [X] [1. Two Sum](leetcode/1)
 - [X] [15. 3Sum](leetcode/15)
