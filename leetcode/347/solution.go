@@ -3,18 +3,17 @@ package main
 import "sort"
 
 func topKFrequent(nums []int, k int) []int {
-	var hMap = make(map[int]int)
+	var hMap = make(map[int]int, len(nums))
 	for i := 0; i < len(nums); i++ {
-		hMap[nums[i]] += 1
+		hMap[nums[i]]++
 	}
 
-	var d = 0
 	keys := make([]int, len(hMap))
 	for key := range hMap {
-		keys[d] = key
-		d++
+		keys = append(keys, key)
 	}
-	sort.Slice(keys, func(a, b int) bool {
+
+	sort.SliceStable(keys, func(a, b int) bool {
 		return hMap[keys[a]] > hMap[keys[b]]
 	})
 
