@@ -348,14 +348,22 @@
 ## LeetCode
 <a name="leetcode"></a>
 
-- [1. Two Sum](leetcode/1)
-- [15. 3Sum](leetcode/15)
-- [19. Remove Nth Node From End of List](leetcode/19)
-- [33. Search in Rotated Sorted Array](leetcode/33)
-- [56. Merge Intervals](leetcode/56)
-- [66. Plus One](leetcode/66)
-- [155. Min Stack](leetcode/155)
-- [328. Odd Even Linked List](leetcode/328)
-- [347. Top K Frequent Elements](leetcode/347)
+[1. Two Sum](leetcode/1)
+
+[15. 3Sum](leetcode/15)
+
+[19. Remove Nth Node From End of List](leetcode/19)
+
+[33. Search in Rotated Sorted Array](leetcode/33)
+
+[56. Merge Intervals](leetcode/56)
+
+[66. Plus One](leetcode/66)
+
+[155. Min Stack](leetcode/155)
+
+[328. Odd Even Linked List](leetcode/328)
+
+[347. Top K Frequent Elements](leetcode/347)
 
 <br>
