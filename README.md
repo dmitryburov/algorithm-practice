@@ -296,7 +296,6 @@
 - [ ] [Гоблины и очереди](tinkoff/1/5)
 - [ ] [Число](tinkoff/1/6)
 </details>
-<br>
 <details>
   <summary>Оптимальные сортировки и поиски за логарифм</summary>
 
@@ -305,7 +304,6 @@
 - [ ] [Минимизируем максимум](tinkoff/2/3)
 - [ ] [Дремучий лес](tinkoff/2/4)
 </details>
-<br>
 <details>
   <summary>Динамическое программирование</summary>
 
@@ -315,7 +313,6 @@
 - [ ] [Гвоздики](tinkoff/3/4)
 - [ ] [Лесенки](tinkoff/3/5)
 </details>
-<br>
 <details>
   <summary>Графы, DFS</summary>
 
@@ -329,7 +326,6 @@
 - [ ] [Topsort](tinkoff/4/8)
 - [ ] [Предок](tinkoff/4/9)
 </details>
-<br>
 <details>
   <summary>BFS, Дейкстра</summary>
 
@@ -338,7 +334,6 @@
 - [ ] [Автобусы](tinkoff/5/3)
 - [ ] [Числа](tinkoff/5/4)
 </details>
-<br>
 <details>
   <summary>Строки</summary>
 
@@ -353,14 +348,14 @@
 ## LeetCode
 <a name="leetcode"></a>
 
-- [X] [1. Two Sum](leetcode/1)
-- [X] [15. 3Sum](leetcode/15)
-- [X] [19. Remove Nth Node From End of List](leetcode/19)
-- [X] [33. Search in Rotated Sorted Array](leetcode/33)
-- [X] [56. Merge Intervals](leetcode/56)
-- [X] [66. Plus One](leetcode/66)
-- [X] [155. Min Stack](leetcode/155)
-- [X] [328. Odd Even Linked List](leetcode/328)
-- [X] [347. Top K Frequent Elements](leetcode/347)
+- [1. Two Sum](leetcode/1)
+- [15. 3Sum](leetcode/15)
+- [19. Remove Nth Node From End of List](leetcode/19)
+- [33. Search in Rotated Sorted Array](leetcode/33)
+- [56. Merge Intervals](leetcode/56)
+- [66. Plus One](leetcode/66)
+- [155. Min Stack](leetcode/155)
+- [328. Odd Even Linked List](leetcode/328)
+- [347. Top K Frequent Elements](leetcode/347)
 
 <br>
