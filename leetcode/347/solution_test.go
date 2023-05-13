@@ -43,5 +43,12 @@ func generateTasks() []TestItem {
 			},
 			output: []int{1},
 		},
+		{
+			input: TestItemInput{
+				arr: []int{1, 1, 2, 4, 1, 3, 3, 4, 10},
+				k:   3,
+			},
+			output: []int{1, 4, 3},
+		},
 	}
 }
