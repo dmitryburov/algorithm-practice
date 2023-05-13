@@ -400,6 +400,6 @@
 ## CodeWars
 <a name="codewars"></a>
 
-В процессе...
+[MergeSort "merge" function](codewars/mergesort_merge_function)
 
 <br>
