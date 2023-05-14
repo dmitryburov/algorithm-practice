@@ -3,18 +3,8 @@ package main
 func mergeSorted(arr1, arr2 []int) []int {
 	var result = make([]int, len(arr1)+len(arr2))
 
-	var i, j, k int
-	for ; k < len(result); k++ {
-		if i >= len(arr1) {
-			result[k] = arr2[j]
-			j++
-			continue
-		} else if j >= len(arr2) {
-			result[k] = arr1[i]
-			i++
-			continue
-		}
-
+	i, j, k := 0, 0, 0
+	for i < len(arr1) && j < len(arr2) {
 		if arr1[i] <= arr2[j] {
 			result[k] = arr1[i]
 			i++
@@ -22,6 +12,19 @@ func mergeSorted(arr1, arr2 []int) []int {
 			result[k] = arr2[j]
 			j++
 		}
+		k++
+	}
+
+	for i < len(arr1) {
+		result[k] = arr1[i]
+		i++
+		k++
+	}
+
+	for j < len(arr2) {
+		result[k] = arr2[j]
+		j++
+		k++
 	}
 
 	return result
