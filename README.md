@@ -402,4 +402,6 @@
 
 [MergeSort "merge" function](codewars/mergesort_merge_function)
 
+[WeIrD StRiNg CaSe](codewars/weird_string_case)
+
 <br>
