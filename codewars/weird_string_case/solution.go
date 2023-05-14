@@ -1,25 +1,27 @@
 package main
 
-import "unicode"
+import (
+	"strings"
+	"unicode"
+)
 
 func toWeirdCase(str string) string {
-	i := 1
-	var result = make([]rune, len(str))
+	var result strings.Builder
 
-	for idx, ch := range str {
-		switch {
-		case unicode.IsSpace(ch):
+	i := 1
+	for _, ch := range str {
+		if unicode.IsSpace(ch) || !unicode.IsLetter(ch) {
 			i = 1
-			result[idx] = ch
-		case unicode.IsLetter(ch):
+			result.WriteRune(ch)
+		} else {
 			if i%2 == 0 {
-				result[idx] = unicode.ToLower(ch)
+				result.WriteByte(byte(unicode.ToLower(ch)))
 			} else {
-				result[idx] = unicode.ToUpper(ch)
+				result.WriteByte(byte(unicode.ToUpper(ch)))
 			}
 			i++
 		}
 	}
 
-	return string(result)
+	return result.String()
 }
