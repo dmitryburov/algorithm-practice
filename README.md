@@ -23,6 +23,7 @@
 - [Яндекс тренировки 1.0](#yandex_train_1)
 - [Яндекс тренировки 2.0](#yandex_train_2)
 - [Яндекс тренировки 3.0](#yandex_train_3)
+- [Яндекс тренировки 4.0](#yandex_train_4)
 - [LeetCode](#leetcode)
 - [CodeWars](#codewars)
 
@@ -365,6 +366,13 @@
 
 ## Яндекс тренировки 3.0
 <a name="yandex_train_3"></a>
+
+В процессе...
+
+<br>
+
+## Яндекс тренировки 4.0
+<a name="yandex_train_4"></a>
 
 В процессе...
 
