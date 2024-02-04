@@ -353,7 +353,12 @@
 ## Яндекс тренировки 1.0
 <a name="yandex_train_1"></a>
 
-В процессе...
+<details>
+  <summary>Лекция 1: «Сложность, тестирование, особые случаи»</summary>
+
+- [X] [A. Кондиционер](yandex_training_1/study_1/A)
+
+</details>
 
 <br>
 
