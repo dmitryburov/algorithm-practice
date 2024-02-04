@@ -357,6 +357,7 @@
   <summary>Лекция 1: «Сложность, тестирование, особые случаи»</summary>
 
 - [X] [A. Кондиционер](yandex_training_1/study_1/A)
+- [X] [B. Треугольник](yandex_training_1/study_1/B)
 
 </details>
 
